@@ -50,11 +50,15 @@ class PokemonBrock(PokemonEnvironment):
     def _get_state(self) -> np.ndarray:
         # Implement your state retrieval logic here
         game_stats = self._generate_game_stats()
-        return [game_stats["badges"]]
+        return [game_stats["location"]["x"]]
 
     def _calculate_reward(self, new_state: dict) -> float:
         # Implement your reward calculation logic here
-        return new_state["badges"] - self.prior_game_stats["badges"]
+
+        diff_x = new_state["location"]["x"] - self.prior_game_stats["location"]["x"]
+
+        return diff_x*100
+        # return new_state["badges"] - self.prior_game_stats["badges"]
 
     def _check_if_done(self, game_stats: dict[str, any]) -> bool:
         # Setting done to true if agent beats first gym (temporary)
