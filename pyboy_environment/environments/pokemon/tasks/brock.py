@@ -56,6 +56,7 @@ class PokemonBrock(PokemonEnvironment):
         # Implement your reward calculation logic here
 
         diff_x = new_state["location"]["x"] - self.prior_game_stats["location"]["x"]
+        print(diff_x)
 
         return diff_x*100
         # return new_state["badges"] - self.prior_game_stats["badges"]
