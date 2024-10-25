@@ -61,7 +61,7 @@ class PokemonBrock(PokemonEnvironment):
         return_state = self.get_used_state(game_stats)
         # print(return_state)
 
-        time.sleep(0.5)
+        # time.sleep(0.5)
 
         # if (self.count < 1000):
         #     self.count += 1
