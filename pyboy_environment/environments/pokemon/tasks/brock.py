@@ -96,9 +96,9 @@ class PokemonBrock(PokemonEnvironment):
         # pre_location_y = self.prior_game_stats["location"]["y"]
 
         if((new_state["location"]["map_id"] == 0) and (self.prior_game_stats["location"]["map_id"] == 40)):
-            return_score += 1000
+            return_score += 100
         if((new_state["location"]["map_id"] == 40) and (self.prior_game_stats["location"]["map_id"] == 0)):
-            return_score -= 1000
+            return_score -= 100
 
         if (new_state["location"]["map_id"] == 40):
             new_dis = self.distance_to_target(new_state,[5,10])
@@ -111,6 +111,7 @@ class PokemonBrock(PokemonEnvironment):
             pre_dis = self.distance_to_target(self.prior_game_stats,[9,5])
 
             return_score += self.distance_potential_score(new_dis,pre_dis,3)
+            return_score += self.distance_discrete_score(new_dis,pre_dis,2,30)
         
         # return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
             
@@ -135,6 +136,18 @@ class PokemonBrock(PokemonEnvironment):
 
         diff_distance = pre_distance - new_distance
         return_score = gain*diff_distance
+
+        return return_score
+    
+    def distance_discrete_score(self,new_distance,pre_distance,step,gain):
+
+        return_score = 0.0
+
+        new_step = new_distance//step
+        pre_step = pre_distance//step
+
+        diff_step = pre_step - new_step
+        return_score = gain*diff_step
 
         return return_score
     
