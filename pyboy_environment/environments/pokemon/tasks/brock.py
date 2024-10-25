@@ -170,29 +170,29 @@ class PokemonBrock(PokemonEnvironment):
             elif (location == [10,12]):
                 score = 130
             elif (location == [9,12]):
-                score = 140
+                score = 1000
             elif (location == [9,11]):
-                score = 150
+                score = 1100
             elif (location == [9,10]):
-                score = 160
+                score = 1200
             elif (location == [9,9]):
-                score = 170
+                score = 1300
             elif (location == [9,8]):
-                score = 180
+                score = 1400
             elif (location == [9,7]):
-                score = 190
+                score = 1500
             elif (location == [9,6]):
-                score = 200
+                score = 2000
             elif (location == [9,5]):
-                score = 210
+                score = 2100
             elif (location == [9,4]):
-                score = 220
+                score = 2200
             elif (location == [9,3]):
-                score = 230
+                score = 2300
             elif (location == [9,2]):
-                score = 240
+                score = 2400
             elif (location == [9,1]):
-                score = 250
+                score = 2500
         
         return score
         
