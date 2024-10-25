@@ -131,7 +131,7 @@ class PokemonBrock(PokemonEnvironment):
         # print(return_score)
             
 
-        return return_score
+        return new_state["badges"] - self.prior_game_stats["badges"]
 
 
 
