@@ -141,6 +141,7 @@ class PokemonBrock(PokemonEnvironment):
             # print("------------------")
         
         return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
+        return_score += self.notOK_action_penalty()
         # # print(return_score)
 
         # return_score += self.get_gride_potential_score(new_state,self.prior_game_stats)
@@ -149,6 +150,19 @@ class PokemonBrock(PokemonEnvironment):
 
         return return_score
     
+    def notOK_action_penalty(self):
+        score = 0.0
+
+        map_id = self.prior_game_stats["location"]["map_id"]
+
+        if (map_id == 40):
+            if ((self.step_action == 1) or (self.step_action == 2) or (self.step_action == 3) or (self.step_action == 4) or (self.step_action == 5)):
+                score -= 1
+        elif (map_id == 0):
+            if ((self.step_action == 4) or (self.step_action == 5)):
+                score -= 1
+
+        return score
 
     def get_simple_reward(self,new_state):
         score = 0.0
