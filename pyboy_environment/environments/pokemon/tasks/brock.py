@@ -167,8 +167,7 @@ class PokemonBrock(PokemonEnvironment):
             new_step_to_target = self.get_step_to_target(new_location,target_location)
             pre_step_to_target = self.get_step_to_target(pre_location,target_location)
 
-            diff_potential = self.get_potential_change(new_step_to_target,pre_step_to_target,new_map)
-            return_score = self.get_potential_score(diff_potential,new_map)
+            return_score = self.get_potential(new_step_to_target,pre_step_to_target,new_map)
 
         return return_score
     
@@ -188,9 +187,9 @@ class PokemonBrock(PokemonEnvironment):
         score = 0.0
 
         if ((new_map_id == 0) and (pre_map_id == 40)):
-            score = 100
+            score = 1000
         elif ((new_map_id == 40) and (pre_map_id == 0)):
-            score = -100
+            score = -1000
         else:
             score = 0.0
 
@@ -205,19 +204,22 @@ class PokemonBrock(PokemonEnvironment):
 
         return steps
     
-    def get_potential_change(self,new_step,pre_step,map_id):
+    def get_potential(self,new_step,pre_step,map_id):
         new_potiential = 0
         pre_potiential = 0
-        diff_potiential = 0
+        gain = 0
+        score = 0.0
 
         if (map_id == 40):
             min_potiential = 0
             max_potiential = 10
+            gain = 1
         elif (map_id == 0):
             min_potiential = 11
             max_potiential = 30
+            gain = 2
         else:
-            return diff_potiential
+            return 0
         
         max_step = max_potiential - min_potiential
         if (new_step > max_step):
@@ -230,22 +232,7 @@ class PokemonBrock(PokemonEnvironment):
         else:
             pre_potiential = max_potiential - pre_step
 
-        diff_potiential = new_potiential - pre_potiential
-
-        return diff_potiential
-    
-    def get_potential_score(self,diff_potential,map_id):
-        score = 0.0
-        gain = 0
-
-        if (map_id == 40):
-            gain = 1
-        elif (map_id == 0):
-            gain = 2
-        else:
-            gain = 0
-        
-        score = gain*diff_potential
+        score = gain*(new_potiential - pre_potiential)
 
         return score
 
