@@ -70,7 +70,7 @@ class PokemonEnvironment(PyboyEnvironment):
 
         self.step_action = button
 
-        button = 3
+        button = 4
 
         # Push the button for a few frames
         self.pyboy.send_input(self.valid_actions[button])
