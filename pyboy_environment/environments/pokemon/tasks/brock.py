@@ -232,12 +232,14 @@ class PokemonBrock(PokemonEnvironment):
         else:
             pre_potiential = max_potiential - pre_step
 
-        if (new_potiential > pre_potiential):
-            score = gain*new_potiential
-        elif (new_potiential < pre_potiential):
-            score = -gain*pre_potiential
-        else:
-            socre = 0.0
+        # if (new_potiential > pre_potiential):
+        #     score = gain*new_potiential
+        # elif (new_potiential < pre_potiential):
+        #     score = -gain*pre_potiential
+        # else:
+        #     score = 0.0
+
+        score = gain*(max_potiential - pre_potiential)
 
         return score
 
