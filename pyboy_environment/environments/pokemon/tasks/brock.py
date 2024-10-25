@@ -301,5 +301,10 @@ class PokemonBrock(PokemonEnvironment):
     def _check_if_truncated(self, game_stats: dict) -> bool:
         # Implement your truncation check logic here
 
+        ifTruuncated = 0
+
+        if (self.steps >= 10000):
+            ifTruuncated = 1
+
         # Maybe if we run out of pokeballs...? or a max step count
-        return self.steps >= 1000
+        return ifTruuncated
