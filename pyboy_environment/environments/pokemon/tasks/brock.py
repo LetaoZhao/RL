@@ -3,6 +3,7 @@ from functools import cached_property
 import numpy as np
 from pyboy.utils import WindowEvent
 import math
+import time
 
 from pyboy_environment.environments.pokemon.pokemon_environment import (
     PokemonEnvironment,
@@ -57,6 +58,9 @@ class PokemonBrock(PokemonEnvironment):
         game_stats = self._generate_game_stats()
 
         return_state = self.get_used_state(game_stats)
+        print(return_state)
+
+        time.sleep(1)
 
         return return_state
     
@@ -89,17 +93,10 @@ class PokemonBrock(PokemonEnvironment):
             self.isMapReach[1] = 1
 
         if (new_state["location"]["map_id"] == 40):
-            diff_y = new_location_y - pre_location_y
-            return_score += diff_y*10
+            return_score += self.distance_to_target_score(new_state,[9,12],5)
 
         if (new_state["location"]["map_id"] == 0):
             return_score += self.distance_to_target_score(new_state,[9,12],5)
-            # diff_x = new_location_x - pre_location_x
-
-            # if (diff_x != 0 ):
-            #     return_score += 1
-
-
             
 
         return return_score
