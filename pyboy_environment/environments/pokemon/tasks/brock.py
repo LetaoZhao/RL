@@ -30,8 +30,8 @@ class PokemonBrock(PokemonEnvironment):
         ]
 
         release_button: list[WindowEvent] = [
-            WindowEvent.RELEASE_ARROW_DOWN,
-            WindowEvent.RELEASE_ARROW_LEFT,
+            WindowEvent.RELEASE_ARROW_DOWN,  # 0
+            WindowEvent.RELEASE_ARROW_LEFT,  # 
             WindowEvent.RELEASE_ARROW_RIGHT,
             WindowEvent.RELEASE_ARROW_UP,
             WindowEvent.RELEASE_BUTTON_A,
