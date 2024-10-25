@@ -39,7 +39,6 @@ class PokemonBrock(PokemonEnvironment):
             # WindowEvent.RELEASE_BUTTON_START,
         ]
 
-        self.count = 0
         self.isMapReach = [0,0,0]
 
         super().__init__(
@@ -89,15 +88,16 @@ class PokemonBrock(PokemonEnvironment):
         # pre_location_x = self.prior_game_stats["location"]["x"]
         # pre_location_y = self.prior_game_stats["location"]["y"]
 
-        if((new_state["location"]["map_id"] == 0) and (self.prior_game_stats["location"]["map_id"] == 40) and (self.isMapReach[1] == 0)):
-            print("in")
-            return_score += 1000
-            self.isMapReach[1] = 1
+        # if((new_state["location"]["map_id"] == 0) and (self.prior_game_stats["location"]["map_id"] == 40) and (self.isMapReach[1] == 0)):
+        #     print("in")
+        #     return_score += 1000
+        #     self.isMapReach[1] = 1
 
         if (new_state["location"]["map_id"] == 40):
             return_score += self.distance_to_target_score(new_state,[5,10],10,1)
 
         if (new_state["location"]["map_id"] == 0):
+            return_score += 1
             return_score += self.distance_to_target_score(new_state,[9,12],6,2)
             
 
