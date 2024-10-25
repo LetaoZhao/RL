@@ -100,47 +100,103 @@ class PokemonBrock(PokemonEnvironment):
         # pre_location_x = self.prior_game_stats["location"]["x"]
         # pre_location_y = self.prior_game_stats["location"]["y"]
 
-        if(self.mapSwitch_count1 != 0):
-            if(self.mapSwitch_count1 < 2):
-                self.mapSwitch_count1 += 1
-            else:
-                self.mapSwitch_count1 = 0
+        # if(self.mapSwitch_count1 != 0):
+        #     if(self.mapSwitch_count1 < 2):
+        #         self.mapSwitch_count1 += 1
+        #     else:
+        #         self.mapSwitch_count1 = 0
 
 
         if((new_state["location"]["map_id"] == 0) and (self.prior_game_stats["location"]["map_id"] == 40)):
-            return_score += 1000
-            self.mapSwitch_count = 1
+            return_score += 100
         if((new_state["location"]["map_id"] == 40) and (self.prior_game_stats["location"]["map_id"] == 0)):
-            return_score -= 1000
-            self.mapSwitch_count = 1
+            return_score -= 100
 
-        if ((new_state["location"]["map_id"] == 40) and (self.mapSwitch_count1 == 0)):
-            new_dis = self.distance_to_target(new_state,[5,10])
-            pre_dis = self.distance_to_target(self.prior_game_stats,[5,10])
+        return_score += self.get_locationi_score(new_state)
+        # if ((new_state["location"]["map_id"] == 40) and (self.mapSwitch_count1 == 0)):
+        #     new_dis = self.distance_to_target(new_state,[5,10])
+        #     pre_dis = self.distance_to_target(self.prior_game_stats,[5,10])
 
-            # return_score += self.distance_potential_score(new_dis,pre_dis,10)
-            return_score += self.distance_discrete_score(new_dis,pre_dis,2,200)
+        #     # return_score += self.distance_potential_score(new_dis,pre_dis,10)
+        #     return_score += self.distance_discrete_score(new_dis,pre_dis,2,200)
 
-        if ((new_state["location"]["map_id"] == 0) and (self.mapSwitch_count1 == 0)):
-            new_dis = self.distance_to_target(new_state,[9,7])
-            pre_dis = self.distance_to_target(self.prior_game_stats,[9,0])
-            # print("------------------")
-            # print([new_dis,pre_dis])
+        # if ((new_state["location"]["map_id"] == 0) and (self.mapSwitch_count1 == 0)):
+        #     new_dis = self.distance_to_target(new_state,[9,7])
+        #     pre_dis = self.distance_to_target(self.prior_game_stats,[9,0])
+        #     # print("------------------")
+        #     # print([new_dis,pre_dis])
             
-            return_score += self.distance_potential_score(new_dis,pre_dis,10)
-            # print(return_score)
-            return_score += self.distance_discrete_score(new_dis,pre_dis,2,200)
-            # print(return_score)
+        #     return_score += self.distance_potential_score(new_dis,pre_dis,10)
+        #     # print(return_score)
+        #     return_score += self.distance_discrete_score(new_dis,pre_dis,2,200)
+        #     # print(return_score)
             # print("------------------")
         
         # # return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
         # # print(return_score)
 
-        return_score += self.get_gride_potential_score(new_state,self.prior_game_stats)
+        # return_score += self.get_gride_potential_score(new_state,self.prior_game_stats)
         # print(return_score)
             
 
         return return_score
+    
+
+    def get_locationi_score(self,state):
+        score = 0.0
+        location = [state["location"]["x"],state["location"]["y"]]
+        map_id = state["location"]["map_id"]
+
+        if (map_id == 40):
+            if (location == [5,4]):
+                score = 10
+            elif (location == [5,5]):
+                score = 20
+            elif (location == [5,6]):
+                score = 30
+            elif (location == [5,7]):
+                score = 40
+            elif (location == [5,8]):
+                score = 50
+            elif (location == [5,9]):
+                score = 60
+            elif (location == [5,10]):
+                score = 70
+        elif (map_id == 0):
+            if (location == [12,12]):
+                score = 110
+            elif (location == [11,12]):
+                score = 120
+            elif (location == [10,12]):
+                score = 130
+            elif (location == [9,12]):
+                score = 140
+            elif (location == [9,11]):
+                score = 150
+            elif (location == [9,10]):
+                score = 160
+            elif (location == [9,9]):
+                score = 170
+            elif (location == [9,8]):
+                score = 180
+            elif (location == [9,7]):
+                score = 190
+            elif (location == [9,6]):
+                score = 200
+            elif (location == [9,5]):
+                score = 210
+            elif (location == [9,4]):
+                score = 220
+            elif (location == [9,3]):
+                score = 230
+            elif (location == [9,2]):
+                score = 240
+            elif (location == [9,1]):
+                score = 250
+        
+        return score
+        
+
 
 
 
