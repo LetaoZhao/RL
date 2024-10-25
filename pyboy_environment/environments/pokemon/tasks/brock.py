@@ -103,7 +103,7 @@ class PokemonBrock(PokemonEnvironment):
         current_x = current_state["location"]["x"]
         current_y = current_state["location"]["y"]
 
-        distance = math.sqrt(math.pow(target[0]-current_x) + math.pow(target[1]-current_y))
+        distance = math.sqrt(math.pow((target[0]-current_x),2) + math.pow((target[1]-current_y),2))
         return distance
 
     def _check_if_done(self, game_stats: dict[str, any]) -> bool:
