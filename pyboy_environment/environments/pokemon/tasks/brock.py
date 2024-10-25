@@ -93,27 +93,32 @@ class PokemonBrock(PokemonEnvironment):
             self.isMapReach[1] = 1
 
         if (new_state["location"]["map_id"] == 40):
-            return_score += self.distance_to_target_score(new_state,[9,12],5)
+            return_score += self.distance_to_target_score(new_state,[9,12],5,10)
 
-        if (new_state["location"]["map_id"] == 0):
-            return_score += self.distance_to_target_score(new_state,[9,12],5)
+        # if (new_state["location"]["map_id"] == 0):
+        #     return_score += self.distance_to_target_score(new_state,[9,12],5)
             
 
         return return_score
-        # return new_state["badges"] - self.prior_game_stats["badges"]
 
 
 
-    def distance_to_target_score(self,current_state,target,range):
+    def distance_to_target_score(self,current_state,target,range,gain):
+        return_score = 0.0
+
         current_x = current_state["location"]["x"]
         current_y = current_state["location"]["y"]
 
         distance = math.sqrt(math.pow((target[0]-current_x),2) + math.pow((target[1]-current_y),2))
 
         if (distance >= range):
-            return 0
+            return_score = 0
         else:
-            return (1 - (1/range)*distance)*10
+            return_score = (1 - (1/range)*distance)*gain
+
+        print("the current position is ",[current_x,current_y],", target is ",target,", range is ",range,". So score is",return_score)
+
+        return return_score
 
 
 
