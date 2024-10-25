@@ -39,7 +39,7 @@ class PokemonBrock(PokemonEnvironment):
             # WindowEvent.RELEASE_BUTTON_START,
         ]
 
-        # self.count = 0.0
+        self.mapSwitch_count = 0
         # self.isMapReach = [0,0,0]
 
         super().__init__(
@@ -95,18 +95,27 @@ class PokemonBrock(PokemonEnvironment):
         # pre_location_x = self.prior_game_stats["location"]["x"]
         # pre_location_y = self.prior_game_stats["location"]["y"]
 
+        if(self.mapSwitch_count != 0):
+            if(self.mapSwitch_count < 4):
+                self.mapSwitch_count += 1
+            else:
+                self.mapSwitch_count = 0
+
+
         if((new_state["location"]["map_id"] == 0) and (self.prior_game_stats["location"]["map_id"] == 40)):
             return_score += 100
+            self.mapSwitch_count = 1
         if((new_state["location"]["map_id"] == 40) and (self.prior_game_stats["location"]["map_id"] == 0)):
             return_score -= 1000
+            self.mapSwitch_count = 1
 
-        if (new_state["location"]["map_id"] == 40):
+        if ((new_state["location"]["map_id"] == 40) and (self.mapSwitch_count == 0)):
             new_dis = self.distance_to_target(new_state,[5,10])
             pre_dis = self.distance_to_target(self.prior_game_stats,[5,10])
 
             return_score += self.distance_potential_score(new_dis,pre_dis,1)
 
-        if (new_state["location"]["map_id"] == 0):
+        if ((new_state["location"]["map_id"] == 0) and (self.mapSwitch_count == 0)):
             new_dis = self.distance_to_target(new_state,[9,5])
             pre_dis = self.distance_to_target(self.prior_game_stats,[9,5])
             # print("------------------")
