@@ -112,7 +112,7 @@ class PokemonBrock(PokemonEnvironment):
 
             return_score += self.distance_potential_score(new_dis,pre_dis,3)
         
-        return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
+        # return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
             
 
         return return_score
