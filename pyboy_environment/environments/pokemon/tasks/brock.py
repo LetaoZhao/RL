@@ -50,12 +50,12 @@ class PokemonBrock(PokemonEnvironment):
     def _get_state(self) -> np.ndarray:
         # Implement your state retrieval logic here
         game_stats = self._generate_game_stats()
-        return [game_stats["location"]["x"]]
+        return [game_stats["location"]["y"]]
 
     def _calculate_reward(self, new_state: dict) -> float:
         # Implement your reward calculation logic here
 
-        diff_x = new_state["location"]["x"] - self.prior_game_stats["location"]["x"]
+        diff_x = new_state["location"]["y"] - self.prior_game_stats["location"]["y"]
         print(diff_x)
 
         return diff_x*100
