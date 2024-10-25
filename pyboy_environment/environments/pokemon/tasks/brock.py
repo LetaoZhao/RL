@@ -58,9 +58,9 @@ class PokemonBrock(PokemonEnvironment):
         game_stats = self._generate_game_stats()
 
         return_state = self.get_used_state(game_stats)
-        print(return_state)
+        # print(return_state)
 
-        time.sleep(0.1)
+        # time.sleep(0.1)
 
         return return_state
     
@@ -88,9 +88,9 @@ class PokemonBrock(PokemonEnvironment):
         # pre_location_x = self.prior_game_stats["location"]["x"]
         # pre_location_y = self.prior_game_stats["location"]["y"]
 
-        if((new_state["location"]["map_id"] == 0) and (self.prior_game_stats["location"]["map_id"] == 40) and (self.isMapReach[1] == 0)):
-            return_score += 1000
-            self.isMapReach[1] = 1
+        # if((new_state["location"]["map_id"] == 0) and (self.prior_game_stats["location"]["map_id"] == 40) and (self.isMapReach[1] == 0)):
+        #     return_score += 1000
+        #     self.isMapReach[1] = 1
 
         if (new_state["location"]["map_id"] == 40):
             return_score += self.distance_to_target_score(new_state,[5,10],5,10)
