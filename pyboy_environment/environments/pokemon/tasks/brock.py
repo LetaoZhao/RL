@@ -40,6 +40,7 @@ class PokemonBrock(PokemonEnvironment):
         ]
 
         self.mapSwitch_count = 0
+        self.mapSwitch_count1 = 0
         self.notmove = 0
         # self.isMapReach = [0,0,0]
         # self.location_potential_table = [
@@ -99,43 +100,43 @@ class PokemonBrock(PokemonEnvironment):
         # pre_location_x = self.prior_game_stats["location"]["x"]
         # pre_location_y = self.prior_game_stats["location"]["y"]
 
-        # if(self.mapSwitch_count != 0):
-        #     if(self.mapSwitch_count < 2):
-        #         self.mapSwitch_count += 1
-        #     else:
-        #         self.mapSwitch_count = 0
+        if(self.mapSwitch_count1 != 0):
+            if(self.mapSwitch_count1 < 2):
+                self.mapSwitch_count1 += 1
+            else:
+                self.mapSwitch_count1 = 0
 
 
-        # if((new_state["location"]["map_id"] == 0) and (self.prior_game_stats["location"]["map_id"] == 40)):
-        #     return_score += 1000
-        #     self.mapSwitch_count = 1
-        # if((new_state["location"]["map_id"] == 40) and (self.prior_game_stats["location"]["map_id"] == 0)):
-        #     return_score -= 1000
-        #     self.mapSwitch_count = 1
+        if((new_state["location"]["map_id"] == 0) and (self.prior_game_stats["location"]["map_id"] == 40)):
+            return_score += 1000
+            self.mapSwitch_count = 1
+        if((new_state["location"]["map_id"] == 40) and (self.prior_game_stats["location"]["map_id"] == 0)):
+            return_score -= 1000
+            self.mapSwitch_count = 1
 
-        # if ((new_state["location"]["map_id"] == 40) and (self.mapSwitch_count == 0)):
-        #     new_dis = self.distance_to_target(new_state,[5,10])
-        #     pre_dis = self.distance_to_target(self.prior_game_stats,[5,10])
+        if ((new_state["location"]["map_id"] == 40) and (self.mapSwitch_count1 == 0)):
+            new_dis = self.distance_to_target(new_state,[5,10])
+            pre_dis = self.distance_to_target(self.prior_game_stats,[5,10])
 
-        #     # return_score += self.distance_potential_score(new_dis,pre_dis,10)
-        #     return_score += self.distance_discrete_score(new_dis,pre_dis,2,200)
+            # return_score += self.distance_potential_score(new_dis,pre_dis,10)
+            return_score += self.distance_discrete_score(new_dis,pre_dis,2,200)
 
-        # if ((new_state["location"]["map_id"] == 0) and (self.mapSwitch_count == 0)):
-        #     new_dis = self.distance_to_target(new_state,[9,7])
-        #     pre_dis = self.distance_to_target(self.prior_game_stats,[9,7])
-        #     # print("------------------")
-        #     # print([new_dis,pre_dis])
+        if ((new_state["location"]["map_id"] == 0) and (self.mapSwitch_count1 == 0)):
+            new_dis = self.distance_to_target(new_state,[9,7])
+            pre_dis = self.distance_to_target(self.prior_game_stats,[9,0])
+            # print("------------------")
+            # print([new_dis,pre_dis])
             
-        #     return_score += self.distance_potential_score(new_dis,pre_dis,10)
-        #     # print(return_score)
-        #     return_score += self.distance_discrete_score(new_dis,pre_dis,2,200)
-        #     # print(return_score)
-        #     # print("------------------")
+            return_score += self.distance_potential_score(new_dis,pre_dis,10)
+            # print(return_score)
+            return_score += self.distance_discrete_score(new_dis,pre_dis,2,200)
+            # print(return_score)
+            # print("------------------")
         
         # # return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
         # # print(return_score)
 
-        return_score = self.get_gride_potential_score(new_state,self.prior_game_stats)
+        return_score += self.get_gride_potential_score(new_state,self.prior_game_stats)
         # print(return_score)
             
 
