@@ -128,7 +128,7 @@ class PokemonBrock(PokemonEnvironment):
             # print("------------------")
         
         # return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
-        print(return_score)
+        # print(return_score)
             
 
         return return_score
