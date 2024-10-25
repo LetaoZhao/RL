@@ -145,54 +145,56 @@ class PokemonBrock(PokemonEnvironment):
     def get_locationi_score(self,state):
         score = 0.0
         location = [state["location"]["x"],state["location"]["y"]]
+        pre_location = [self.prior_game_stats["location"]["x"],self.prior_game_stats["location"]["y"]]
         map_id = state["location"]["map_id"]
 
-        if (map_id == 40):
-            if (location == [5,4]):
-                score = 10
-            elif (location == [5,5]):
-                score = 20
-            elif (location == [5,6]):
-                score = 30
-            elif (location == [5,7]):
-                score = 40
-            elif (location == [5,8]):
-                score = 50
-            elif (location == [5,9]):
-                score = 60
-            elif (location == [5,10]):
-                score = 70
-        elif (map_id == 0):
-            if (location == [12,12]):
-                score = 110
-            elif (location == [11,12]):
-                score = 120
-            elif (location == [10,12]):
-                score = 130
-            elif (location == [9,12]):
-                score = 1000
-            elif (location == [9,11]):
-                score = 1100
-            elif (location == [9,10]):
-                score = 1200
-            elif (location == [9,9]):
-                score = 1300
-            elif (location == [9,8]):
-                score = 1400
-            elif (location == [9,7]):
-                score = 1500
-            elif (location == [9,6]):
-                score = 2000
-            elif (location == [9,5]):
-                score = 2100
-            elif (location == [9,4]):
-                score = 2200
-            elif (location == [9,3]):
-                score = 2300
-            elif (location == [9,2]):
-                score = 2400
-            elif (location == [9,1]):
-                score = 2500
+        if (location != pre_location):
+            if (map_id == 40):
+                if (location == [5,4]):
+                    score = 10
+                elif (location == [5,5]):
+                    score = 20
+                elif (location == [5,6]):
+                    score = 30
+                elif (location == [5,7]):
+                    score = 40
+                elif (location == [5,8]):
+                    score = 50
+                elif (location == [5,9]):
+                    score = 60
+                elif (location == [5,10]):
+                    score = 70
+            elif (map_id == 0):
+                if (location == [12,12]):
+                    score = 110
+                elif (location == [11,12]):
+                    score = 120
+                elif (location == [10,12]):
+                    score = 130
+                elif (location == [9,12]):
+                    score = 1000
+                elif (location == [9,11]):
+                    score = 1100
+                elif (location == [9,10]):
+                    score = 1200
+                elif (location == [9,9]):
+                    score = 1300
+                elif (location == [9,8]):
+                    score = 1400
+                elif (location == [9,7]):
+                    score = 1500
+                elif (location == [9,6]):
+                    score = 2000
+                elif (location == [9,5]):
+                    score = 2100
+                elif (location == [9,4]):
+                    score = 2200
+                elif (location == [9,3]):
+                    score = 2300
+                elif (location == [9,2]):
+                    score = 2400
+                elif (location == [9,1]):
+                    score = 2500
         
         return score
         
