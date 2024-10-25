@@ -68,11 +68,14 @@ class PokemonBrock(PokemonEnvironment):
     def _calculate_reward(self, new_state: dict) -> float:
         # Implement your reward calculation logic here
 
-        diff_x = new_state["location"]["y"] - self.prior_game_stats["location"]["y"]
+        return_score = 0.0
+
+        diff_y = new_state["location"]["y"] - self.prior_game_stats["location"]["y"]
+        return_score += diff_y*100
         # print(diff_x)
 
-        # return diff_x*100
-        return new_state["badges"] - self.prior_game_stats["badges"]
+        return return_score
+        # return new_state["badges"] - self.prior_game_stats["badges"]
 
     def _check_if_done(self, game_stats: dict[str, any]) -> bool:
         # Setting done to true if agent beats first gym (temporary)
