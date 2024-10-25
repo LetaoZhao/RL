@@ -116,7 +116,7 @@ class PokemonBrock(PokemonEnvironment):
         else:
             return_score = (1 - (1/range)*distance)*gain
 
-        print("the current position is ",[current_x,current_y],", target is ",target,", range is ",range,". So score is",return_score)
+        # print("the current position is ",[current_x,current_y],", target is ",target,", range is ",range,". So score is",return_score)
 
         return return_score
 
