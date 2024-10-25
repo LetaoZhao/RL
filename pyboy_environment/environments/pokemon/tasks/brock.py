@@ -64,7 +64,7 @@ class PokemonBrock(PokemonEnvironment):
         return_state = self.get_used_state(game_stats)
         # print(return_state)
 
-        time.sleep(0.1)
+        # time.sleep(0.1)
 
         # if (self.count < 1000):
         #     self.count += 1
@@ -212,10 +212,10 @@ class PokemonBrock(PokemonEnvironment):
 
         if (map_id == 40):
             min_potiential = 0
-            max_potiential = 6
+            max_potiential = 10
         elif (map_id == 0):
-            min_potiential = 7
-            max_potiential = 23
+            min_potiential = 11
+            max_potiential = 30
         else:
             return diff_potiential
         
