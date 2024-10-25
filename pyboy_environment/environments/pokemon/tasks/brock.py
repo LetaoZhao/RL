@@ -101,7 +101,7 @@ class PokemonBrock(PokemonEnvironment):
         #     self.isMapReach[1] = 1
 
         if (new_state["location"]["map_id"] == 40):
-            return_score += self.distance_to_target_score(new_state,[5,12],7,1)
+            return_score += self.distance_to_target_score(new_state,[5,10],7,1)
 
         if (new_state["location"]["map_id"] == 0):
             return_score += 1
