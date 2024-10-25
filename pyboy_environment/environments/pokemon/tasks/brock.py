@@ -24,7 +24,7 @@ class PokemonBrock(PokemonEnvironment):
             WindowEvent.PRESS_ARROW_UP,
             WindowEvent.PRESS_BUTTON_A,
             WindowEvent.PRESS_BUTTON_B,
-            WindowEvent.PRESS_BUTTON_START,
+            # WindowEvent.PRESS_BUTTON_START,
         ]
 
         release_button: list[WindowEvent] = [
@@ -34,7 +34,7 @@ class PokemonBrock(PokemonEnvironment):
             WindowEvent.RELEASE_ARROW_UP,
             WindowEvent.RELEASE_BUTTON_A,
             WindowEvent.RELEASE_BUTTON_B,
-            WindowEvent.RELEASE_BUTTON_START,
+            # WindowEvent.RELEASE_BUTTON_START,
         ]
 
         super().__init__(
