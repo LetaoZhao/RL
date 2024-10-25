@@ -60,7 +60,7 @@ class PokemonBrock(PokemonEnvironment):
         return_state = self.get_used_state(game_stats)
         print(return_state)
 
-        time.sleep(1)
+        time.sleep(0.1)
 
         return return_state
     
