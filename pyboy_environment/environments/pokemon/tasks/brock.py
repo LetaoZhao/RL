@@ -64,7 +64,7 @@ class PokemonBrock(PokemonEnvironment):
         return_state = self.get_used_state(game_stats)
         # print(return_state)
 
-        time.sleep(0.5)
+        time.sleep(0.1)
 
         # if (self.count < 1000):
         #     self.count += 1
@@ -157,7 +157,7 @@ class PokemonBrock(PokemonEnvironment):
             return_score = self.get_map_change_score(new_map,pre_map)
 
         elif (self.mapSwitch_count != 0):
-            if (self.mapSwitch_count < 1):
+            if (self.mapSwitch_count < 2):
                 self.mapSwitch_count += 1
             else:
                 self.mapSwitch_count = 0
