@@ -83,17 +83,17 @@ class PokemonBrock(PokemonEnvironment):
 
         return_score = 0.0
 
-        new_location_x = new_state["location"]["x"]
-        new_location_y = new_state["location"]["y"]
-        pre_location_x = self.prior_game_stats["location"]["x"]
-        pre_location_y = self.prior_game_stats["location"]["y"]
+        # new_location_x = new_state["location"]["x"]
+        # new_location_y = new_state["location"]["y"]
+        # pre_location_x = self.prior_game_stats["location"]["x"]
+        # pre_location_y = self.prior_game_stats["location"]["y"]
 
         if((new_state["location"]["map_id"] == 0) and (self.prior_game_stats["location"]["map_id"] == 40) and (self.isMapReach[1] == 0)):
             return_score += 1000
             self.isMapReach[1] = 1
 
         if (new_state["location"]["map_id"] == 40):
-            return_score += self.distance_to_target_score(new_state,[9,12],5,10)
+            return_score += self.distance_to_target_score(new_state,[5,10],5,10)
 
         # if (new_state["location"]["map_id"] == 0):
         #     return_score += self.distance_to_target_score(new_state,[9,12],5)
