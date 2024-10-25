@@ -106,7 +106,7 @@ class PokemonBrock(PokemonEnvironment):
             return_score += 100
             self.mapSwitch_count = 1
         if((new_state["location"]["map_id"] == 40) and (self.prior_game_stats["location"]["map_id"] == 0)):
-            return_score -= 1000
+            return_score -= 100
             self.mapSwitch_count = 1
 
         if ((new_state["location"]["map_id"] == 40) and (self.mapSwitch_count == 0)):
