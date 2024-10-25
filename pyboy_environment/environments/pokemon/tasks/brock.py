@@ -180,8 +180,8 @@ class PokemonBrock(PokemonEnvironment):
         if (new_map_id == pre_map_id):
             if (new_map_id == 40):
                 target = [5,10]
-            elif (new_map_id == 0):
-                target = [9,0]
+            elif (new_map_id == 0): 
+                target = [8,0]
             else:
                 target = [0,0]
 
