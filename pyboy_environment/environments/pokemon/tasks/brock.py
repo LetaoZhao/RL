@@ -135,7 +135,7 @@ class PokemonBrock(PokemonEnvironment):
         # # print(return_score)
 
         return_score = self.get_gride_potential_score(new_state,self.prior_game_stats)
-        print(return_score)
+        # print(return_score)
             
 
         return return_score
@@ -157,11 +157,11 @@ class PokemonBrock(PokemonEnvironment):
             return_score = self.get_map_change_score(new_map,pre_map)
 
         elif (self.mapSwitch_count != 0):
-            if (self.mapSwitch_count < 2):
+            if (self.mapSwitch_count < 3):
                 self.mapSwitch_count += 1
             else:
                 self.mapSwitch_count = 0
-            return_score = 0.0
+            return_score = 10
 
         else:
             new_step_to_target = self.get_step_to_target(new_location,target_location)
@@ -232,7 +232,12 @@ class PokemonBrock(PokemonEnvironment):
         else:
             pre_potiential = max_potiential - pre_step
 
-        score = gain*(new_potiential - pre_potiential)
+        if (new_potiential > pre_potiential):
+            score = gain*new_potiential
+        elif (new_potiential < pre_potiential):
+            score = -gain*pre_potiential
+        else:
+            socre = 0.0
 
         return score
 
