@@ -67,7 +67,7 @@ class PokemonBrock(PokemonEnvironment):
         return_state = self.get_used_state(game_stats)
         # print(return_state)
 
-        time.sleep(0.1)
+        # time.sleep(0.1)
 
         # if (self.count < 1000):
         #     self.count += 1
@@ -144,7 +144,7 @@ class PokemonBrock(PokemonEnvironment):
         # # print(return_score)
 
         # return_score += self.get_gride_potential_score(new_state,self.prior_game_stats)
-        print([return_score,self.step_action])
+        # print([return_score,self.step_action])
             
 
         return return_score
