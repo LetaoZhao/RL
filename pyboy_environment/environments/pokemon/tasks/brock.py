@@ -112,9 +112,9 @@ class PokemonBrock(PokemonEnvironment):
             # print("------------------")
             # print([new_dis,pre_dis])
             
-            return_score += self.distance_potential_score(new_dis,pre_dis,4)
+            return_score += self.distance_potential_score(new_dis,pre_dis,3)
             # print(return_score)
-            return_score += self.distance_discrete_score(new_dis,pre_dis,2,70)
+            return_score += self.distance_discrete_score(new_dis,pre_dis,2,100)
             # print(return_score)
             # print("------------------")
         
