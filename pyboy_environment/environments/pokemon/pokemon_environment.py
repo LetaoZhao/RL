@@ -68,6 +68,10 @@ class PokemonEnvironment(PyboyEnvironment):
         bins = np.linspace(0, 1, len(self.valid_actions) + 1)
         button = np.digitize(action, bins) - 1
 
+        if(button > 5):
+            print("HIHIHIH")
+            print(button)
+
         self.step_action = button
 
         # button = 5
