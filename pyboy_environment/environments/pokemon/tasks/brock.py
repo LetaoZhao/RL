@@ -42,6 +42,7 @@ class PokemonBrock(PokemonEnvironment):
         self.mapSwitch_count = 0
         self.mapSwitch_count1 = 0
         self.notmove = 0
+        self.step_action = 0
         # self.isMapReach = [0,0,0]
         # self.location_potential_table = [
         #     []
@@ -66,7 +67,7 @@ class PokemonBrock(PokemonEnvironment):
         return_state = self.get_used_state(game_stats)
         # print(return_state)
 
-        # time.sleep(0.1)
+        time.sleep(0.1)
 
         # if (self.count < 1000):
         #     self.count += 1
@@ -100,19 +101,26 @@ class PokemonBrock(PokemonEnvironment):
         # pre_location_x = self.prior_game_stats["location"]["x"]
         # pre_location_y = self.prior_game_stats["location"]["y"]
 
-        # if(self.mapSwitch_count1 != 0):
-        #     if(self.mapSwitch_count1 < 2):
-        #         self.mapSwitch_count1 += 1
-        #     else:
-        #         self.mapSwitch_count1 = 0
+        if(self.mapSwitch_count1 != 0):
+            if(self.mapSwitch_count1 < 2):
+                self.mapSwitch_count1 += 1
+            else:
+                self.mapSwitch_count1 = 0
 
 
         if((new_state["location"]["map_id"] == 0) and (self.prior_game_stats["location"]["map_id"] == 40)):
-            return_score += 100
+            return_score += 1000
+            self.mapSwitch_count1 = 1
         if((new_state["location"]["map_id"] == 40) and (self.prior_game_stats["location"]["map_id"] == 0)):
-            return_score -= 100
+            return_score -= 1000
+            self.mapSwitch_count1 = 1
 
-        return_score += self.get_locationi_score(new_state)
+        if(self.mapSwitch_count1 == 0):
+            return_score += self.get_simple_reward(new_state)
+        else:
+            return_score += 1
+        # return_score += self.get_locationi_score(new_state)
+
         # if ((new_state["location"]["map_id"] == 40) and (self.mapSwitch_count1 == 0)):
         #     new_dis = self.distance_to_target(new_state,[5,10])
         #     pre_dis = self.distance_to_target(self.prior_game_stats,[5,10])
@@ -132,14 +140,65 @@ class PokemonBrock(PokemonEnvironment):
         #     # print(return_score)
             # print("------------------")
         
-        # # return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
+        return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
         # # print(return_score)
 
         # return_score += self.get_gride_potential_score(new_state,self.prior_game_stats)
-        # print(return_score)
+        print([return_score,self.step_action])
             
 
         return return_score
+    
+
+    def get_simple_reward(self,new_state):
+        score = 0.0
+
+        new_location = [new_state["location"]["x"],new_state["location"]["y"]]
+        pre_location = [self.prior_game_stats["location"]["x"],self.prior_game_stats["location"]["y"]]
+        new_map_id = new_state["location"]["map_id"]
+        pre_map_id = self.prior_game_stats["location"]["map_id"]
+
+        target = [0,0]
+        new_diff = [0,0]
+        pre_diff = [0,0]
+
+        if (new_map_id == pre_map_id):
+            if (new_map_id == 40):
+                target = [5,10]
+            elif (new_map_id == 0):
+                target = [9,0]
+            else:
+                target = [0,0]
+
+            new_diff = [(target[0]-new_location[0]),(target[1]-new_location[1])]
+            pre_diff = [(target[0]-pre_location[0]),(target[1]-pre_location[1])]
+
+            if (np.sign(new_diff[0]) == np.sign(pre_diff[0])):
+                if (abs(pre_diff[0])>abs(new_diff[0])):
+                    score += 10
+                elif (abs(pre_diff[0])<abs(new_diff[0])):
+                    score -= 10
+                else:
+                    score += 0
+            else:
+                score += 5
+
+            if (np.sign(new_diff[1]) == np.sign(pre_diff[1])):
+                if (abs(pre_diff[1])>abs(new_diff[1])):
+                    score += 10
+                elif (abs(pre_diff[1])<abs(new_diff[1])):
+                    score -= 10
+                else:
+                    score += 0
+            else:
+                score += 5
+        else:
+            score += 0
+
+    
+        return score
+
+
     
 
     def get_locationi_score(self,state):

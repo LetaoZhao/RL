@@ -68,6 +68,8 @@ class PokemonEnvironment(PyboyEnvironment):
         bins = np.linspace(0, 1, len(self.valid_actions) + 1)
         button = np.digitize(action, bins) - 1
 
+        self.step_action = button
+
         # Push the button for a few frames
         self.pyboy.send_input(self.valid_actions[button])
 
