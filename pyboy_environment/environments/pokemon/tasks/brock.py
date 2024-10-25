@@ -75,17 +75,22 @@ class PokemonBrock(PokemonEnvironment):
         pre_location_x = self.prior_game_stats["location"]["x"]
         pre_location_y = self.prior_game_stats["location"]["y"]
 
-        if((new_location_x == pre_location_x) and (new_location_y == pre_location_y)):
-            return_score -= 1
+        if((new_state["location"]["map_id"] == 0) and (self.prior_game_stats["location"]["map_id"] == 40)):
+            return_score += 1000
 
         if (new_state["location"]["map_id"] == 40):
             diff_y = new_location_y - pre_location_y
-            return_score += diff_y*1
+            return_score += diff_y*10
 
         if (new_state["location"]["map_id"] == 0):
             diff_x = new_location_x - pre_location_x
+
+            if (diff_x != 0 ):
+                return_score += 1
+
             return_score += diff_x*10
-        # print(diff_x)
+
+            
 
         return return_score
         # return new_state["badges"] - self.prior_game_stats["badges"]
