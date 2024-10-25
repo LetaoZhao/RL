@@ -117,12 +117,12 @@ class PokemonBrock(PokemonEnvironment):
             return_score += self.distance_discrete_score(new_dis,pre_dis,2,200)
 
         if ((new_state["location"]["map_id"] == 0) and (self.mapSwitch_count == 0)):
-            new_dis = self.distance_to_target(new_state,[9,14])
-            pre_dis = self.distance_to_target(self.prior_game_stats,[9,14])
+            new_dis = self.distance_to_target(new_state,[9,7])
+            pre_dis = self.distance_to_target(self.prior_game_stats,[9,7])
             # print("------------------")
             # print([new_dis,pre_dis])
             
-            # return_score += self.distance_potential_score(new_dis,pre_dis,10)
+            return_score += self.distance_potential_score(new_dis,pre_dis,10)
             # print(return_score)
             return_score += self.distance_discrete_score(new_dis,pre_dis,2,200)
             # print(return_score)
