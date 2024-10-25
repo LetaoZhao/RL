@@ -2,6 +2,7 @@ from functools import cached_property
 
 import numpy as np
 from pyboy.utils import WindowEvent
+import math
 
 from pyboy_environment.environments.pokemon.pokemon_environment import (
     PokemonEnvironment,
@@ -83,17 +84,24 @@ class PokemonBrock(PokemonEnvironment):
             return_score += diff_y*10
 
         if (new_state["location"]["map_id"] == 0):
+            diff_dis = self.distance_to_target(new_state,[9,12])
             diff_x = new_location_x - pre_location_x
 
             if (diff_x != 0 ):
                 return_score += 1
 
-            return_score += diff_x*10
+            return_score -= diff_dis*10
 
             
 
         return return_score
         # return new_state["badges"] - self.prior_game_stats["badges"]
+    def distance_to_target(self,current_state,target):
+        current_x = current_state["location"]["x"]
+        current_y = current_state["location"]["y"]
+
+        distance = math.sqrt(math.pow(target[0]-current_x) + math.pow(target[1]-current_y))
+        return distance
 
     def _check_if_done(self, game_stats: dict[str, any]) -> bool:
         # Setting done to true if agent beats first gym (temporary)
