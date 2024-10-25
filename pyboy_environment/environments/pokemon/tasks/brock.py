@@ -101,32 +101,49 @@ class PokemonBrock(PokemonEnvironment):
             return_score -= 1000
 
         if (new_state["location"]["map_id"] == 40):
-            return_score += self.distance_to_target_score(new_state,[5,10],10,1)
+            new_dis = self.distance_to_target(self,new_state,[5,10])
+            pre_dis = self.distance_to_target(self,self.prior_game_stats,[5,10])
+
+            return_score += self.distance_potential_score(new_dis,pre_dis,1)
 
         if (new_state["location"]["map_id"] == 0):
-            return_score += self.distance_to_target_score(new_state,[9,5],15,3)
+            new_dis = self.distance_to_target(self,new_state,[9,5])
+            pre_dis = self.distance_to_target(self,self.prior_game_stats,[9,5])
+
+            return_score += self.distance_potential_score(new_dis,pre_dis,3)
+        
+        return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
             
 
         return return_score
 
 
 
-    def distance_to_target_score(self,current_state,target,range,gain):
+    def distance_to_target(self,state,target):
+
+        x = state["location"]["x"]
+        y = state["location"]["y"]
+
+        distance = math.sqrt(math.pow((target[0]-x),2) + math.pow((target[1]-y),2))
+
+        return distance
+    
+    
+    def distance_potential_score(self,new_distance,pre_distance,gain):
+
         return_score = 0.0
 
-        current_x = current_state["location"]["x"]
-        current_y = current_state["location"]["y"]
-
-        distance = math.sqrt(math.pow((target[0]-current_x),2) + math.pow((target[1]-current_y),2))
-
-        if (distance >= range):
-            return_score = 0
-        else:
-            return_score = (1 - (1/range)*distance)*gain
-
-        # print("the current position is ",[current_x,current_y],", target is ",target,", range is ",range,". So score is",return_score)
+        diff_distance = pre_distance - new_distance
+        return_score = gain*diff_distance
 
         return return_score
+    
+    def not_move_penalty(self,new_state,pre_state,gain):
+        x_move = new_state["location"]["x"] - pre_state["location"]["x"]
+        y_move = new_state["location"]["y"] - pre_state["location"]["y"]
+
+        if ((x_move == 0) and (y_move == 0)):
+            return -gain
 
 
 
