@@ -96,7 +96,7 @@ class PokemonBrock(PokemonEnvironment):
         # pre_location_y = self.prior_game_stats["location"]["y"]
 
         if(self.mapSwitch_count != 0):
-            if(self.mapSwitch_count < 3):
+            if(self.mapSwitch_count < 2):
                 self.mapSwitch_count += 1
             else:
                 self.mapSwitch_count = 0
