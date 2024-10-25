@@ -239,7 +239,7 @@ class PokemonBrock(PokemonEnvironment):
         # else:
         #     score = 0.0
 
-        score = gain*(max_potiential - pre_potiential)
+        score = gain*(new_potiential - pre_potiential)
 
         return score
 
