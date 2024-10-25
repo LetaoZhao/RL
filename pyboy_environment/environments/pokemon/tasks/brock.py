@@ -50,6 +50,8 @@ class PokemonBrock(PokemonEnvironment):
             headless=headless,
         )
 
+
+
     def _get_state(self) -> np.ndarray:
         # Implement your state retrieval logic here
         game_stats = self._generate_game_stats()
@@ -58,6 +60,8 @@ class PokemonBrock(PokemonEnvironment):
 
         return return_state
     
+
+
     def get_used_state(self,full_state):
         
         used_states = [
@@ -67,6 +71,8 @@ class PokemonBrock(PokemonEnvironment):
         ]
 
         return used_states
+
+
 
     def _calculate_reward(self, new_state: dict) -> float:
         # Implement your reward calculation logic here
@@ -87,24 +93,32 @@ class PokemonBrock(PokemonEnvironment):
             return_score += diff_y*10
 
         if (new_state["location"]["map_id"] == 0):
-            diff_dis = self.distance_to_target(new_state,[9,12])
-            diff_x = new_location_x - pre_location_x
+            return_score += self.distance_to_target_score(new_state,[9,12])
+            # diff_x = new_location_x - pre_location_x
 
-            if (diff_x != 0 ):
-                return_score += 1
+            # if (diff_x != 0 ):
+            #     return_score += 1
 
-            return_score -= diff_dis*10
 
             
 
         return return_score
         # return new_state["badges"] - self.prior_game_stats["badges"]
-    def distance_to_target(self,current_state,target):
+
+
+
+    def distance_to_target_score(self,current_state,target,range):
         current_x = current_state["location"]["x"]
         current_y = current_state["location"]["y"]
 
         distance = math.sqrt(math.pow((target[0]-current_x),2) + math.pow((target[1]-current_y),2))
-        return distance
+
+        if (distance >= range):
+            return 0
+        else:
+            return (1 - (1/range)*distance)*10
+
+
 
     def _check_if_done(self, game_stats: dict[str, any]) -> bool:
         # Setting done to true if agent beats first gym (temporary)
