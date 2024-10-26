@@ -110,7 +110,7 @@ class PokemonBrock(PokemonEnvironment):
             # return_score += self.step_penalty(10)
             # return_score += self.collision_penalty(new_state)
             return_score += self.inMap_step_reward(new_state)
-            return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
+            # return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
             return_score += self.notOK_action_penalty()
         else:
             # print("on_switch")
@@ -177,20 +177,20 @@ class PokemonBrock(PokemonEnvironment):
 
         if (map_id == 0):
             if ((new_location[0] == 9) and (pre_location[0] != 9)):
-                print(new_location,pre_location)
-                print("in")
+                # print(new_location,pre_location)
+                # print("in")
                 score += 1000
             if ((new_location[0] != 9) and (pre_location[0] == 9)):
-                print(new_location,pre_location)
-                print("out")
+                # print(new_location,pre_location)
+                # print("out")
                 score -= 1000
             if ((new_location[1] <= 6) and (pre_location[1] > 6)):
-                print(new_location,pre_location)
-                print("up")
+                # print(new_location,pre_location)
+                # print("up")
                 score += 1000
             if ((new_location[1] > 6) and (pre_location[1] <= 6)):
-                print(new_location,pre_location)
-                print("down")
+                # print(new_location,pre_location)
+                # print("down")
                 score -= 1000
 
         return score
