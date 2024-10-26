@@ -245,12 +245,12 @@ class PokemonBrock(PokemonEnvironment):
             if (self.step_action == 0):
                 score += gain
             else:
-                score -= 0
+                score -= gain
         elif (map_id == 0):
             if ((self.step_action == 1) or (self.step_action == 2) or (self.step_action == 3) or (self.step_action == 0)):
                 score += gain
             else:
-                score -= 0
+                score -= gain
 
         return score
 
@@ -283,7 +283,7 @@ class PokemonBrock(PokemonEnvironment):
                 if (abs(pre_diff[0])>abs(new_diff[0])):
                     score += gain*(abs(pre_diff[0])-abs(new_diff[0]))
                 elif (abs(pre_diff[0])<abs(new_diff[0])):
-                    score -= (gain/2)*(abs(new_diff[0])-abs(pre_diff[0]))
+                    score -= (gain/1)*(abs(new_diff[0])-abs(pre_diff[0]))
                 else:
                     score += 0
             else:
@@ -302,7 +302,7 @@ class PokemonBrock(PokemonEnvironment):
                 if (abs(pre_diff[1])>abs(new_diff[1])):
                     score += gain*(abs(pre_diff[1])-abs(new_diff[1]))
                 elif (abs(pre_diff[1])<abs(new_diff[1])):
-                    score -= (gain/2)*(abs(new_diff[1])-abs(pre_diff[1]))
+                    score -= (gain/1)*(abs(new_diff[1])-abs(pre_diff[1]))
                 else:
                     score += 0
             else:
