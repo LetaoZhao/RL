@@ -84,16 +84,18 @@ class PokemonBrock(PokemonEnvironment):
 
         self.stepCount += 1
         
-        used_states = self.get_1D_maps(full_state["map"],self.prior_game_stats["map"])
-            # full_state["location"]["x"],
-            # full_state["location"]["y"],
-            # # full_state["location"]["map_id"],
-            # self.prior_game_stats["location"]["x"],
-            # self.prior_game_stats["location"]["y"],
-            # self.prior_game_stats["location"]["map_id"],
+        # used_states = self.get_1D_maps(full_state["map"],self.prior_game_stats["map"])
+
+        used_states = [
+            full_state["location"]["x"],
+            full_state["location"]["y"],
+            full_state["location"]["map_id"],
+            self.prior_game_stats["location"]["x"],
+            self.prior_game_stats["location"]["y"],
+            self.prior_game_stats["location"]["map_id"],
             # self.step_action
             # self.stepCount
-            
+        ]
         
 
         return used_states
@@ -116,19 +118,54 @@ class PokemonBrock(PokemonEnvironment):
 
 
 
+
+
+# ============================================================================== # ==============================================================================
     def _calculate_reward(self, new_state: dict) -> float:
         # Implement your reward calculation logic here
         return_score = 0.0
 
         self.stepCount += 1
 
-        return_score += self.new_map_reward(new_state,1000)
+        # return_score += self.new_map_reward(new_state,1000)
+        return_score += self.let_action(new_state,1)
+        return_score += self.new_map(new_state)
         
         return return_score
+# ============================================================================== # ==============================================================================
+
+
+
+    def let_action(self,new_state,gain):
+        score = 0
+
+        new_location = [new_state["location"]["x"],new_state["location"]["y"]]
+        pre_location = [self.prior_game_stats["location"]["x"],self.prior_game_stats["location"]["y"]]
+
+        if (new_location != pre_location):
+            score += gain
+        else:
+            score -= gain
+
+        return score
     
+    def new_map(self,new_state):
+        score = 0
 
+        new_map_id = new_state["location"]["map_id"]
+        pre_map_id = self.prior_game_stats["location"]["map_id"]
 
+        if ((new_map_id == 0) and (pre_map_id == 40)):
+            score += 1000
+        if ((new_map_id == 40) and (pre_map_id == 0)):
+            score -= 1000
 
+        if ((new_map_id == 1) and (pre_map_id == 0)):
+            score += 10000
+        if ((new_map_id == 0) and (pre_map_id == 1)):
+            score -= 10000
+
+        return score
 
 
 
@@ -198,6 +235,8 @@ class PokemonBrock(PokemonEnvironment):
 
 
 
+
+
     def new_map_reward(self,new_state,gain):
         score = 0
         full_map = new_state["map"]
@@ -206,8 +245,8 @@ class PokemonBrock(PokemonEnvironment):
         isNew = self.search_map(full_map)
 
         if (isNew):
-            print("new map!")
-            print(len(self.map_queue))
+            # print("new map!")
+            # print(len(self.map_queue))
             score += gain
 
         return score
