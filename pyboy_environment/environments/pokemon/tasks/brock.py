@@ -111,11 +111,11 @@ class PokemonBrock(PokemonEnvironment):
 
         if(self.mapSwitch_count1 == 0):
             # print("normal")
-            return_score += self.distance_reward(new_state,100)
-            return_score += self.step_penalty(10)
+            # return_score += self.distance_reward(new_state,100)
+            # return_score += self.step_penalty(10)
             # return_score += self.collision_penalty(new_state)
             return_score += self.inMap_step_reward(new_state)
-            # return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
+            return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
             return_score += self.notOK_action_penalty(1)
         else:
             # print("on_switch")
@@ -179,22 +179,33 @@ class PokemonBrock(PokemonEnvironment):
         new_location = [new_state["location"]["x"],new_state["location"]["y"]]
         pre_location = [self.prior_game_stats["location"]["x"],self.prior_game_stats["location"]["y"]]
 
+        if (map_id == 40):
+            if ((new_location[0] == 5) and (pre_location[0] != 5)):
+                score += 1000
+            if ((new_location[0] != 5) and (pre_location[0] == 5)):
+                score -= 1000
+
+            if ((new_location[1] >= 6) and (pre_location[1] < 6)):
+                score += 100
+            if ((new_location[1] < 6) and (pre_location[1] >= 6)):
+                score -= 100
+
+            if ((new_location[1] >= 10) and (pre_location[1] < 10)):
+                score += 100
+            if ((new_location[1] < 10) and (pre_location[1] >= 10)):
+                score -= 100
+
+
+
         if (map_id == 0):
             if ((new_location[0] == 9) and (pre_location[0] != 9)):
-                # print(new_location,pre_location)
-                # print("in")
                 score += 1000
             if ((new_location[0] != 9) and (pre_location[0] == 9)):
-                # print(new_location,pre_location)
-                # print("out")
                 score -= 1000
+
             if ((new_location[1] <= 6) and (pre_location[1] > 6)):
-                # print(new_location,pre_location)
-                # print("up")
                 score += 1000
             if ((new_location[1] > 6) and (pre_location[1] <= 6)):
-                # print(new_location,pre_location)
-                # print("down")
                 score -= 1000
 
         return score
@@ -291,8 +302,10 @@ class PokemonBrock(PokemonEnvironment):
 
         if ((x_move == 0) and (y_move == 0)):
             return -gain
+            # return -gain*(self.stepCount/1000)
         else:
             return gain
+            # return gain*(self.stepCount/1000)
 
 
 
