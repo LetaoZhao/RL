@@ -197,7 +197,7 @@ class PokemonBrock(PokemonEnvironment):
         isSame = 0
 
         for i in range(0,curret_map_num):
-            isSame = self.compare_maps(map,self.map_queue[i])
+            isSame = self.compare_maps(map,self.map_queue[i],0.5)
             if (isSame == 1):
                 isNew = 0
 
