@@ -210,17 +210,15 @@ class PokemonBrock(PokemonEnvironment):
         if (map_id == 0):
             if ((new_location == [11,12]) and (pre_location == [12,12])):
                 score += 1000
-            if ((new_location == [12,12]) and (pre_location == [11,12])):
-                score -= 1000
-            
-            if ((new_location == [10,12]) and (pre_location == [11,12])):
+            elif ((new_location == [10,12]) and (pre_location == [11,12])):
                 score += 1000
-            if ((new_location == [11,12]) and (pre_location == [10,12])):
-                score -= 1000
-            
-            if ((new_location == [9,12]) and (pre_location == [10,12])):
+            elif ((new_location == [9,12]) and (pre_location == [10,12])):
                 score += 1000
-            if ((new_location == [10,12]) and (pre_location == [9,12])):
+            elif (pre_location == [11,12]):
+                score -= 1000
+            elif (pre_location == [10,12]):
+                score -= 1000
+            elif ((pre_location == [9,12]) and (new_location != [8,12])):
                 score -= 1000
 
             
@@ -338,7 +336,7 @@ class PokemonBrock(PokemonEnvironment):
 
     
 
-    def get_locationi_score(self,state):
+    def get_location_score(self,state):
         score = 0.0
         location = [state["location"]["x"],state["location"]["y"]]
         pre_location = [self.prior_game_stats["location"]["x"],self.prior_game_stats["location"]["y"]]
@@ -360,6 +358,7 @@ class PokemonBrock(PokemonEnvironment):
                     score = 60
                 elif (location == [5,10]):
                     score = 70
+
             elif (map_id == 0):
                 if (location == [12,12]):
                     score = 110
