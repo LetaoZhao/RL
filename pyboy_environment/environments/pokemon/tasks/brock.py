@@ -49,6 +49,8 @@ class PokemonBrock(PokemonEnvironment):
         self.stepCount = 0
         self.LR_count = 0
 
+        self.notUse = 0
+
         super().__init__(
             act_freq=act_freq,
             task="brock",
@@ -96,36 +98,39 @@ class PokemonBrock(PokemonEnvironment):
         return_score = 0.0
         change_10_0_gain = 2000
 
-        if(self.mapSwitch_count1 != 0):
-            if(self.mapSwitch_count1 < 5):
-                self.mapSwitch_count1 += 1
+        if (self.notUse == 0):
+            if(self.mapSwitch_count1 != 0):
+                if(self.mapSwitch_count1 < 5):
+                    self.mapSwitch_count1 += 1
+                else:
+                    self.mapSwitch_count1 = 0
+                    # print("end_switch")
+
+            if((new_state["location"]["map_id"] == 0) and (self.prior_game_stats["location"]["map_id"] == 40)):
+                return_score += change_10_0_gain
+                self.mapSwitch_count1 = 1
+                # print("start_switch")
+            if((new_state["location"]["map_id"] == 40) and (self.prior_game_stats["location"]["map_id"] == 0)):
+                return_score -= change_10_0_gain
+                self.mapSwitch_count1 = 1
+                # print("start_switch")
+
+            if(self.mapSwitch_count1 == 0):
+                return_score += self.up_base_reward(new_state)
+                # print("normal")
+                return_score += self.distance_reward(new_state,10)
+                return_score += self.step_penalty(10)
+                return_score += self.collision_penalty(new_state)
+                return_score += self.inMap_step_reward(new_state)
+                return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
+                return_score += self.notOK_action_penalty(1)
             else:
-                self.mapSwitch_count1 = 0
-                # print("end_switch")
-
-        if((new_state["location"]["map_id"] == 0) and (self.prior_game_stats["location"]["map_id"] == 40)):
-            return_score += change_10_0_gain
-            self.mapSwitch_count1 = 1
-            # print("start_switch")
-        if((new_state["location"]["map_id"] == 40) and (self.prior_game_stats["location"]["map_id"] == 0)):
-            return_score -= change_10_0_gain
-            self.mapSwitch_count1 = 1
-            # print("start_switch")
-
-        if(self.mapSwitch_count1 == 0):
-            return_score += self.up_base_reward(new_state)
-            # print("normal")
-            return_score += self.distance_reward(new_state,10)
-            return_score += self.step_penalty(10)
-            return_score += self.collision_penalty(new_state)
-            return_score += self.inMap_step_reward(new_state)
-            return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
-            return_score += self.notOK_action_penalty(1)
+                # print("on_switch")
+                return_score += 1
+            
+            # print(return_score)
         else:
-            # print("on_switch")
-            return_score += 1
-        
-        # print(return_score)
+            print("not trained")
 
 
         if (new_state["location"]["map_id"] == 12):

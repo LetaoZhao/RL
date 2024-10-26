@@ -68,13 +68,34 @@ class PokemonEnvironment(PyboyEnvironment):
         bins = np.linspace(0, 1, len(self.valid_actions) + 1)
         button = np.digitize(action, bins) - 1
 
+
+
+
+
         if(button > 5):
             print("HIHIHIH")
             print(button)
 
         self.step_action = button
 
+        state = self._generate_game_stats()
+
+        self.notUse = 1
+        if (state["location"]["map_id"] == 40):
+            button = 0
+        elif (state["location"]["map_id"] == 0):
+            if (state["location"]["x"] != 8):
+                button = 1
+        else:
+            self.notUse = 0
+            button = button
+
         # button = 5
+
+
+
+
+
 
         # Push the button for a few frames
         self.pyboy.send_input(self.valid_actions[button])
