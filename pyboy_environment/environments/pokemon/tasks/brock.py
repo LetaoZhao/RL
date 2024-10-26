@@ -63,7 +63,7 @@ class PokemonBrock(PokemonEnvironment):
         game_stats = self._generate_game_stats()
 
         return_state = self.get_used_state(game_stats)
-        print(return_state)
+        # print(return_state)
 
         # time.sleep(0.1)
 
@@ -92,26 +92,26 @@ class PokemonBrock(PokemonEnvironment):
                 self.mapSwitch_count1 += 1
             else:
                 self.mapSwitch_count1 = 0
-                print("end_switch")
+                # print("end_switch")
 
 
         if((new_state["location"]["map_id"] == 0) and (self.prior_game_stats["location"]["map_id"] == 40)):
             return_score += 1000
             self.mapSwitch_count1 = 1
-            print("start_switch")
+            # print("start_switch")
         if((new_state["location"]["map_id"] == 40) and (self.prior_game_stats["location"]["map_id"] == 0)):
             return_score -= 1000
             self.mapSwitch_count1 = 1
-            print("start_switch")
+            # print("start_switch")
 
         if(self.mapSwitch_count1 == 0):
-            print("normal")
+            # print("normal")
             return_score += self.get_simple_reward(new_state)
             return_score += self.inMap_step_reward(new_state)
             return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
             return_score += self.notOK_action_penalty()
         else:
-            print("on_switch")
+            # print("on_switch")
             return_score += 1
         
         # print(return_score)
