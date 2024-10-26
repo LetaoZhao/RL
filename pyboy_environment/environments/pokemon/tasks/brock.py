@@ -208,9 +208,9 @@ class PokemonBrock(PokemonEnvironment):
 
 
         if (map_id == 0):
-            if ((new_location[0] < 10) and (pre_location[0] >= 10)):
+            if ((new_location[0] < 11) and (pre_location[0] >= 11)):
                 score += 1000
-            if ((new_location[0] >= 10) and (pre_location[0] < 10)):
+            if ((new_location[0] >= 11) and (pre_location[0] < 11)):
                 score -= 1000
             
             if ((new_location[0] == 8) and (pre_location[0] != 8)):
@@ -260,7 +260,7 @@ class PokemonBrock(PokemonEnvironment):
             if (new_map_id == 40):
                 target = [5,12]
             elif (new_map_id == 0): 
-                target = [9,0]
+                target = [8,0]
             else:
                 target = [0,0]
 
