@@ -191,8 +191,8 @@ class PokemonBrock(PokemonEnvironment):
             if (action == 4):
                 score += gain
 
-            if (new_location == pre_location):
-                score = 0
+        if (new_location == pre_location):
+            score = 0
         
         return score
 
