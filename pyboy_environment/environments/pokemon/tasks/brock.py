@@ -46,6 +46,8 @@ class PokemonBrock(PokemonEnvironment):
         self.notmove = 0
         self.step_action = 0
 
+        self.stepCount = 0
+
         super().__init__(
             act_freq=act_freq,
             task="brock",
@@ -70,12 +72,15 @@ class PokemonBrock(PokemonEnvironment):
         return return_state
     
     def get_used_state(self,full_state):
+
+        self.stepCount += 1
         
         used_states = [
             full_state["location"]["x"],
             full_state["location"]["y"],
             full_state["location"]["map_id"],
-            self.step_action
+            self.step_action,
+            self.stepCount
         ]
 
         return used_states
@@ -107,7 +112,7 @@ class PokemonBrock(PokemonEnvironment):
         if(self.mapSwitch_count1 == 0):
             # print("normal")
             return_score += self.distance_reward(new_state,100)
-            # return_score += self.step_penalty(10)
+            return_score += self.step_penalty(10)
             # return_score += self.collision_penalty(new_state)
             return_score += self.inMap_step_reward(new_state)
             # return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
@@ -153,7 +158,7 @@ class PokemonBrock(PokemonEnvironment):
 
 
     def step_penalty(self,gain):
-        return -gain
+        return -gain*(self.stepCount/1000)
     
     def collision_penalty(self,new_state):
         score = 0
@@ -505,6 +510,9 @@ class PokemonBrock(PokemonEnvironment):
         
         if (game_stats["location"]["map_id"] == 12):
             ifDone = 1
+
+        if (ifDone):
+            self.stepCount = 0
         # Setting done to true if agent beats first gym (temporary)
         return ifDone
 
@@ -527,4 +535,7 @@ class PokemonBrock(PokemonEnvironment):
         #         ifTruuncated = 1
 
         # Maybe if we run out of pokeballs...? or a max step count
+        if (ifTruuncated):
+            self.stepCount = 0
+
         return ifTruuncated
