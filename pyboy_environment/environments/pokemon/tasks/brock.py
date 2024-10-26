@@ -107,7 +107,7 @@ class PokemonBrock(PokemonEnvironment):
         if(self.mapSwitch_count1 == 0):
             # print("normal")
             return_score += self.distance_reward(new_state)
-            # return_score += self.step_penalty()
+            return_score += self.step_penalty(10)
             # return_score += self.collision_penalty(new_state)
             return_score += self.inMap_step_reward(new_state)
             # return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
@@ -153,8 +153,8 @@ class PokemonBrock(PokemonEnvironment):
 
 
 
-    def step_penalty(self):
-        return -10
+    def step_penalty(self,gain):
+        return -gain
     
     def collision_penalty(self,new_state):
         score = 0
@@ -487,8 +487,15 @@ class PokemonBrock(PokemonEnvironment):
 
 
     def _check_if_done(self, game_stats: dict[str, any]) -> bool:
+        ifDone = 0
+
+        if (game_stats["badges"] > self.prior_game_stats["badges"]):
+            ifDone = 1
+        
+        if (game_stats["location"]["map_id"] == 12):
+            ifDone = 1
         # Setting done to true if agent beats first gym (temporary)
-        return game_stats["badges"] > self.prior_game_stats["badges"]
+        return ifDone
 
     def _check_if_truncated(self, game_stats: dict) -> bool:
         # Implement your truncation check logic here
@@ -498,8 +505,8 @@ class PokemonBrock(PokemonEnvironment):
         if (self.steps >= 1000):
             ifTruuncated = 1
 
-        if (game_stats["location"]["map_id"] == 12):
-            ifTruuncated = 1
+        # if (game_stats["location"]["map_id"] == 12):
+        #     ifTruuncated = 1
 
         # if ((game_stats["location"]["x"] == self.prior_game_stats["location"]["x"]) and (game_stats["location"]["y"] == self.prior_game_stats["location"]["y"])):
         #     self.notmove += 1
