@@ -202,15 +202,15 @@ class PokemonBrock(PokemonEnvironment):
         map_id = self.prior_game_stats["location"]["map_id"]
 
         if (map_id == 40):
-            if ((self.step_action == 1) or (self.step_action == 2) or (self.step_action == 3) or (self.step_action == 4) or (self.step_action == 5)):
-                score -= gain
-            else:
+            if (self.step_action == 0):
                 score += gain
+            else:
+                score -= gain
         elif (map_id == 0):
-            if ((self.step_action == 4) or (self.step_action == 5)):
-                score -= gain
-            else:
+            if ((self.step_action == 1) or (self.step_action == 2) or (self.step_action == 3) or (self.step_action == 0)):
                 score += gain
+            else:
+                score -= gain
 
         return score
 
