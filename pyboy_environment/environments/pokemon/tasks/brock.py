@@ -112,6 +112,7 @@ class PokemonBrock(PokemonEnvironment):
 
 
     def old_method(self,new_state):
+        return_score = 0
         change_10_0_gain = 5000
 
         if(self.mapSwitch_count1 != 0):
@@ -170,6 +171,7 @@ class PokemonBrock(PokemonEnvironment):
             
 
         # print(return_score)
+        return return_score
     
 
 
