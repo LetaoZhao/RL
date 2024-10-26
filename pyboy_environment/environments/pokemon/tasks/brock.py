@@ -179,21 +179,21 @@ class PokemonBrock(PokemonEnvironment):
         new_location = [new_state["location"]["x"],new_state["location"]["y"]]
         pre_location = [self.prior_game_stats["location"]["x"],self.prior_game_stats["location"]["y"]]
 
-        if (map_id == 40):
-            if ((new_location[0] == 5) and (pre_location[0] != 5)):
-                score += 1000
-            if ((new_location[0] != 5) and (pre_location[0] == 5)):
-                score -= 1000
+        # if (map_id == 40):
+        #     if ((new_location[0] == 5) and (pre_location[0] != 5)):
+        #         score += 1000
+        #     if ((new_location[0] != 5) and (pre_location[0] == 5)):
+        #         score -= 1000
 
-            if ((new_location[1] >= 6) and (pre_location[1] < 6)):
-                score += 100
-            if ((new_location[1] < 6) and (pre_location[1] >= 6)):
-                score -= 100
+        #     if ((new_location[1] >= 6) and (pre_location[1] < 6)):
+        #         score += 100
+        #     if ((new_location[1] < 6) and (pre_location[1] >= 6)):
+        #         score -= 100
 
-            if ((new_location[1] >= 10) and (pre_location[1] < 10)):
-                score += 100
-            if ((new_location[1] < 10) and (pre_location[1] >= 10)):
-                score -= 100
+        #     if ((new_location[1] >= 10) and (pre_location[1] < 10)):
+        #         score += 100
+        #     if ((new_location[1] < 10) and (pre_location[1] >= 10)):
+        #         score -= 100
 
 
 
@@ -304,7 +304,7 @@ class PokemonBrock(PokemonEnvironment):
             return -gain
             # return -gain*(self.stepCount/1000)
         else:
-            return gain
+            return 0
             # return gain*(self.stepCount/1000)
 
 
