@@ -82,8 +82,8 @@ class PokemonBrock(PokemonEnvironment):
             full_state["location"]["x"],
             full_state["location"]["y"],
             full_state["location"]["map_id"],
-            self.prior_game_stats["location"]["x"],
-            self.prior_game_stats["location"]["y"],
+            # self.prior_game_stats["location"]["x"],
+            # self.prior_game_stats["location"]["y"],
             self.step_action
             # self.stepCount
         ]
@@ -118,14 +118,22 @@ class PokemonBrock(PokemonEnvironment):
                 # print("start_switch")
 
             if(self.mapSwitch_count1 == 0):
-                return_score += self.up_base_reward(new_state)
-                # print("normal")
-                return_score += self.distance_reward(new_state,10)
-                return_score += self.step_penalty(10)
-                return_score += self.collision_penalty(new_state)
-                return_score += self.inMap_step_reward(new_state)
-                return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
-                return_score += self.notOK_action_penalty(1)
+                # return_score += self.up_base_reward(new_state)
+                # # print("normal")
+                # return_score += self.distance_reward(new_state,10)
+                # return_score += self.step_penalty(10)
+                # return_score += self.collision_penalty(new_state)
+                # return_score += self.inMap_step_reward(new_state)
+                # return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
+                # return_score += self.notOK_action_penalty(1)
+
+                return_score += self.get_location_score(new_state)
+
+                if (return_score == 0):
+                    return_score += self.distance_reward(new_state,100)
+
+                return_score += self.notOK_action_penalty(10)
+                
             else:
                 # print("on_switch")
                 return_score += 1
@@ -263,17 +271,17 @@ class PokemonBrock(PokemonEnvironment):
         map_id = self.prior_game_stats["location"]["map_id"]
 
         if (map_id == 40):
-            if (self.step_action == 0):
+            if ((self.step_action == 0) and (self.step_action == 1) or (self.step_action == 2) or (self.step_action == 3)):
                 score += gain
             else:
                 score -= gain
         elif (map_id == 0):
-            if ((self.step_action == 1) or (self.step_action == 3)):
+            if ((self.step_action == 0) and (self.step_action == 1) or (self.step_action == 2) or (self.step_action == 3)):
                 score += gain
             else:
                 score -= gain
         elif (map_id == 1):
-            if ((self.step_action == 1) or (self.step_action == 2) or (self.step_action == 3)):
+            if ((self.step_action == 0) and (self.step_action == 1) or (self.step_action == 2) or (self.step_action == 3)):
                 score += gain
             else:
                 score -= gain
@@ -311,7 +319,7 @@ class PokemonBrock(PokemonEnvironment):
                 if (abs(pre_diff[0])>abs(new_diff[0])):
                     score += gain*(abs(pre_diff[0])-abs(new_diff[0]))
                 elif (abs(pre_diff[0])<abs(new_diff[0])):
-                    score -= (gain/1)*(abs(new_diff[0])-abs(pre_diff[0]))
+                    score -= gain*(abs(new_diff[0])-abs(pre_diff[0]))
                 else:
                     score += 0
             else:
@@ -330,7 +338,7 @@ class PokemonBrock(PokemonEnvironment):
                 if (abs(pre_diff[1])>abs(new_diff[1])):
                     score += gain*(abs(pre_diff[1])-abs(new_diff[1]))
                 elif (abs(pre_diff[1])<abs(new_diff[1])):
-                    score -= (gain/1)*(abs(new_diff[1])-abs(pre_diff[1]))
+                    score -= gain*(abs(new_diff[1])-abs(pre_diff[1]))
                 else:
                     score += 0
             else:
@@ -373,52 +381,136 @@ class PokemonBrock(PokemonEnvironment):
 
         if (location != pre_location):
             if (map_id == 40):
-                if (location == [5,4]):
-                    score = 10
-                elif (location == [5,5]):
-                    score = 20
-                elif (location == [5,6]):
-                    score = 30
-                elif (location == [5,7]):
-                    score = 40
-                elif (location == [5,8]):
-                    score = 50
-                elif (location == [5,9]):
-                    score = 60
-                elif (location == [5,10]):
-                    score = 70
+                if ((location == [5,4]) and (pre_location != [5,4])):
+                    score += 100
+                if ((location != [5,4]) and (pre_location == [5,4])):
+                    score -= 100
+
+                if ((location == [5,5]) and (pre_location != [5,5])):
+                    score += 200
+                if ((location != [5,5]) and (pre_location == [5,5])):
+                    score -= 200
+
+                if ((location == [5,6]) and (pre_location != [5,6])):
+                    score += 300
+                if ((location != [5,6]) and (pre_location == [5,6])):
+                    score -= 300
+                
+                if ((location == [5,7]) and (pre_location != [5,7])):
+                    score += 400
+                if ((location != [5,7]) and (pre_location == [5,7])):
+                    score -= 400
+
+                if ((location == [5,8]) and (pre_location != [5,8])):
+                    score += 500
+                if ((location != [5,8]) and (pre_location == [5,8])):
+                    score -= 500
+                
+                if ((location == [5,9]) and (pre_location != [5,9])):
+                    score += 600
+                if ((location != [5,9]) and (pre_location == [5,9])):
+                    score -= 600
+                
+                if ((location == [5,10]) and (pre_location != [5,10])):
+                    score += 700
+                if ((location != [5,10]) and (pre_location == [5,10])):
+                    score -= 700
+
+                if ((location == [5,11]) and (pre_location != [5,11])):
+                    score += 800
+                if ((location != [5,11]) and (pre_location == [5,11])):
+                    score -= 800
 
             elif (map_id == 0):
-                if (location == [12,12]):
-                    score = 110
-                elif (location == [11,12]):
-                    score = 120
-                elif (location == [10,12]):
-                    score = 130
-                elif (location == [9,12]):
-                    score = 1000
-                elif (location == [9,11]):
-                    score = 1100
-                elif (location == [9,10]):
-                    score = 1200
-                elif (location == [9,9]):
-                    score = 1300
-                elif (location == [9,8]):
-                    score = 1400
-                elif (location == [9,7]):
-                    score = 1500
-                elif (location == [9,6]):
-                    score = 2000
-                elif (location == [9,5]):
-                    score = 2100
-                elif (location == [9,4]):
-                    score = 2200
-                elif (location == [9,3]):
-                    score = 2300
-                elif (location == [9,2]):
-                    score = 2400
-                elif (location == [9,1]):
-                    score = 2500
+                if ((location == [11,12]) and (pre_location != [11,12])):
+                    score += 1100
+                if ((location != [11,12]) and (pre_location == [11,12])):
+                    score -= 1100
+
+                if ((location == [10,12]) and (pre_location != [10,121])):
+                    score += 1200
+                if ((location != [10,12]) and (pre_location == [10,12])):
+                    score -= 1200
+
+                if ((location == [9,12]) and (pre_location != [9,12])):
+                    score += 1300
+                if ((location != [9,12]) and (pre_location == [9,12])):
+                    score -= 1300
+                
+                if ((location == [8,12]) and (pre_location != [8,12])):
+                    score += 1400
+                if ((location != [8,12]) and (pre_location == [8,12])):
+                    score -= 1400
+
+                if ((location == [8,11]) and (pre_location != [8,11])):
+                    score += 1500
+                if ((location != [8,11]) and (pre_location == [8,11])):
+                    score -= 1500
+
+                if ((location == [8,10]) and (pre_location != [8,10])):
+                    score += 1600
+                if ((location != [8,10]) and (pre_location == [8,10])):
+                    score -= 1600
+
+                if ((location == [8,9]) and (pre_location != [8,9])):
+                    score += 1700
+                if ((location != [8,9]) and (pre_location == [8,9])):
+                    score -= 1700
+
+                if ((location == [8,8]) and (pre_location != [8,8])):
+                    score += 1800
+                if ((location != [8,8]) and (pre_location == [8,8])):
+                    score -= 1800
+
+                if ((location == [8,7]) and (pre_location != [8,7])):
+                    score += 1900
+                if ((location != [8,7]) and (pre_location == [8,7])):
+                    score -= 1900
+
+                if ((location == [8,6]) and (pre_location != [8,6])):
+                    score += 2000
+                if ((location != [8,6]) and (pre_location == [8,6])):
+                    score -= 2000
+
+                if ((location == [9,6]) and (pre_location != [9,6])):
+                    score += 2100
+                if ((location != [9,6]) and (pre_location == [9,6])):
+                    score -= 2100
+
+                if ((location == [10,6]) and (pre_location != [10,6])):
+                    score += 2200
+                if ((location != [10,6]) and (pre_location == [10,6])):
+                    score -= 2200
+
+                if ((location == [10,5]) and (pre_location != [10,5])):
+                    score += 2300
+                if ((location != [10,5]) and (pre_location == [10,5])):
+                    score -= 2300
+
+                if ((location == [10,4]) and (pre_location != [10,4])):
+                    score += 2400
+                if ((location != [10,4]) and (pre_location == [10,4])):
+                    score -= 2400
+
+                if ((location == [10,3]) and (pre_location != [10,3])):
+                    score += 2500
+                if ((location != [10,3]) and (pre_location == [10,3])):
+                    score -= 2500
+
+                if ((location == [10,2]) and (pre_location != [10,2])):
+                    score += 2600
+                if ((location != [10,2]) and (pre_location == [10,2])):
+                    score -= 2600
+                
+                if ((location == [10,1]) and (pre_location != [10,1])):
+                    score += 2700
+                if ((location != [10,1]) and (pre_location == [10,1])):
+                    score -= 2700
+                
+                if ((location == [10,0]) and (pre_location != [10,0])):
+                    score += 2800
+                if ((location != [10,0]) and (pre_location == [10,0])):
+                    score -= 2800
         
         return score
         
