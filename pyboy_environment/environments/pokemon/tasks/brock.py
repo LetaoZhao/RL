@@ -49,7 +49,7 @@ class PokemonBrock(PokemonEnvironment):
         self.stepCount = 0
         self.LR_count = 0
 
-        self.notUse = 1
+        self.notUse = 0
 
         super().__init__(
             act_freq=act_freq,
