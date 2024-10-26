@@ -115,7 +115,7 @@ class PokemonBrock(PokemonEnvironment):
         if(self.mapSwitch_count1 == 0):
             return_score += self.up_base_reward(new_state)
             # print("normal")
-            return_score += self.distance_reward(new_state,100)
+            return_score += self.distance_reward(new_state,10)
             return_score += self.step_penalty(10)
             return_score += self.collision_penalty(new_state)
             return_score += self.inMap_step_reward(new_state)
@@ -211,9 +211,9 @@ class PokemonBrock(PokemonEnvironment):
 
         if (map_id == 0):
             if ((new_location[0] < 12) and (pre_location[0] >= 12)):
-                score += 1000
+                score += 100
             if ((new_location[0] >= 12) and (pre_location[0] < 12)):
-                score -= 1000
+                score -= 100
             if ((new_location[0] < 11) and (pre_location[0] >= 11)):
                 score += 200
             if ((new_location[0] >= 11) and (pre_location[0] < 11)):
@@ -251,7 +251,7 @@ class PokemonBrock(PokemonEnvironment):
             else:
                 score -= gain
         elif (map_id == 0):
-            if ((self.step_action == 1) or (self.step_action == 2) or (self.step_action == 3) or (self.step_action == 0)):
+            if ((self.step_action == 1) or (self.step_action == 3)):
                 score += gain
             else:
                 score -= gain
