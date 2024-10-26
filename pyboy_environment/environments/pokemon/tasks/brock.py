@@ -178,10 +178,12 @@ class PokemonBrock(PokemonEnvironment):
         if (map_id == 0):
             if ((new_location[0] == 8) and (pre_location[0] != 8)):
                 score += 1000
-                print("in")
             if ((new_location[0] != 8) and (pre_location[0] == 8)):
                 score -= 1000
-                print("out")
+            if ((new_location[1] <= 6) and (pre_location[1] > 6)):
+                score += 1000
+            if ((new_location[1] > 6) and (pre_location[1] <= 6)):
+                score -= 1000
 
         return score
     
@@ -266,6 +268,8 @@ class PokemonBrock(PokemonEnvironment):
 
     
         return score
+
+
 
 
     
