@@ -148,7 +148,7 @@ class PokemonBrock(PokemonEnvironment):
             elif (new_location[1] > pre_location[1]):
                 score -= 100
             else:
-                score -= 5
+                score += 0
 
             if (new_location[0] != pre_location[0]):
                 self.LR_count += 1
@@ -160,7 +160,7 @@ class PokemonBrock(PokemonEnvironment):
             else:
                 score += 0
         else:
-            score = 0
+            score += 0
         
         return score
     
