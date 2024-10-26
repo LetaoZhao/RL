@@ -118,8 +118,9 @@ class PokemonBrock(PokemonEnvironment):
 
     def _calculate_reward(self, new_state: dict) -> float:
         # Implement your reward calculation logic here
-
         return_score = 0.0
+
+        self.stepCount += 1
 
         return_score += self.new_map_reward(new_state,1000)
         
@@ -841,6 +842,7 @@ class PokemonBrock(PokemonEnvironment):
         if (ifDone):
             self.stepCount = 0
             self.notUse = 1
+            self.map_queue = []
         # Setting done to true if agent beats first gym (temporary)
         return ifDone
 
@@ -870,5 +872,6 @@ class PokemonBrock(PokemonEnvironment):
             self.notmove = 0
             self.stepCount = 0
             self.notUse = 1
+            self.map_queue = []
 
         return ifTruuncated
