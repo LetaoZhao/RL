@@ -98,10 +98,15 @@ class PokemonBrock(PokemonEnvironment):
     def get_1D_maps(self,map_1,map_2):
         result = []
 
-        for i1 in range(0,len(map_1)):
-            for i2 in range(0,len(map_1[0])):
-                result.append(map_1[i1][i2])
-                result.append(map_2[i1][i2])
+        height = len(map_1)
+        width = len(map_1[0])
+        start_height = height//2 - 3
+        start_width = width//2 - 3
+
+        for i1 in range(0,6):
+            for i2 in range(0,6):
+                result.append(map_1[i1+start_height][i2+start_width])
+                result.append(map_2[i1+start_height][i2+start_width])
         
         return result
 
