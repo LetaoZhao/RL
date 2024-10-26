@@ -482,7 +482,7 @@ class PokemonBrock(PokemonEnvironment):
         if ((x_move == 0) and (y_move == 0)):
             return -gain
         else:
-            return gain
+            return 0
 
 
 
