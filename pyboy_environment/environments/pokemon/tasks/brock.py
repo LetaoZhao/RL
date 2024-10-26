@@ -39,15 +39,12 @@ class PokemonBrock(PokemonEnvironment):
             # WindowEvent.RELEASE_BUTTON_START,
         ]
 
-        self.pathOver_count = 0
+        self.pathOverX_count = 0
+        self.pathOverY_count = 0
         self.mapSwitch_count = 0
         self.mapSwitch_count1 = 0
         self.notmove = 0
         self.step_action = 0
-        # self.isMapReach = [0,0,0]
-        # self.location_potential_table = [
-        #     []
-        # ]
 
         super().__init__(
             act_freq=act_freq,
@@ -70,16 +67,8 @@ class PokemonBrock(PokemonEnvironment):
 
         # time.sleep(0.1)
 
-        # if (self.count < 1000):
-        #     self.count += 1
-        # else:
-        #     self.count = 0
-        #     self.isMapReach = [0,0,0]
-
         return return_state
     
-
-
     def get_used_state(self,full_state):
         
         used_states = [
@@ -97,11 +86,6 @@ class PokemonBrock(PokemonEnvironment):
         # Implement your reward calculation logic here
 
         return_score = 0.0
-
-        # new_location_x = new_state["location"]["x"]
-        # new_location_y = new_state["location"]["y"]
-        # pre_location_x = self.prior_game_stats["location"]["x"]
-        # pre_location_y = self.prior_game_stats["location"]["y"]
 
         if(self.mapSwitch_count1 != 0):
             if(self.mapSwitch_count1 < 2):
@@ -121,36 +105,14 @@ class PokemonBrock(PokemonEnvironment):
             return_score += self.get_simple_reward(new_state)
         else:
             return_score += 1
-        # return_score += self.get_locationi_score(new_state)
-
-        # if ((new_state["location"]["map_id"] == 40) and (self.mapSwitch_count1 == 0)):
-        #     new_dis = self.distance_to_target(new_state,[5,10])
-        #     pre_dis = self.distance_to_target(self.prior_game_stats,[5,10])
-
-        #     # return_score += self.distance_potential_score(new_dis,pre_dis,10)
-        #     return_score += self.distance_discrete_score(new_dis,pre_dis,2,200)
-
-        # if ((new_state["location"]["map_id"] == 0) and (self.mapSwitch_count1 == 0)):
-        #     new_dis = self.distance_to_target(new_state,[9,7])
-        #     pre_dis = self.distance_to_target(self.prior_game_stats,[9,0])
-        #     # print("------------------")
-        #     # print([new_dis,pre_dis])
-            
-        #     return_score += self.distance_potential_score(new_dis,pre_dis,10)
-        #     # print(return_score)
-        #     return_score += self.distance_discrete_score(new_dis,pre_dis,2,200)
-        #     # print(return_score)
-            # print("------------------")
         
         return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
         return_score += self.notOK_action_penalty()
         # # print(return_score)
 
-        # return_score += self.get_gride_potential_score(new_state,self.prior_game_stats)
-        # print([return_score,self.step_action])
 
         if ((new_state["location"]["map_id"] != 0) and (new_state["location"]["map_id"] != 40)):
-            print("YEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
+            print("YEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEES")
             print(new_state["location"]["map_id"])
 
             return_score += 100000
@@ -196,7 +158,7 @@ class PokemonBrock(PokemonEnvironment):
             pre_diff = [(target[0]-pre_location[0]),(target[1]-pre_location[1])]
 
             if (np.sign(new_diff[0]) == np.sign(pre_diff[0])):
-                self.pathOver_count = 0
+                self.pathOverX_count = 0
 
                 if (abs(pre_diff[0])>abs(new_diff[0])):
                     score += 10
@@ -205,15 +167,16 @@ class PokemonBrock(PokemonEnvironment):
                 else:
                     score += 0
             else:
-                score += 0
-                # if (self.pathOver_count < 3):
-                #     score += 5
-                #     self.pathOver_count += 1
-                # else:
-                #     score += 0
-                #     self.pathOver_count += 1
+                if (self.pathOverX_count < 2):
+                    score += 5
+                    self.pathOverX_count += 1
+                else:
+                    score += 0
+                    self.pathOverX_count += 1
 
             if (np.sign(new_diff[1]) == np.sign(pre_diff[1])):
+                self.pathOverY_count = 0
+
                 if (abs(pre_diff[1])>abs(new_diff[1])):
                     score += 10
                 elif (abs(pre_diff[1])<abs(new_diff[1])):
@@ -221,7 +184,12 @@ class PokemonBrock(PokemonEnvironment):
                 else:
                     score += 0
             else:
-                score += 0
+                if (self.pathOverY_count < 2):
+                    score += 5
+                    self.pathOverY_count += 1
+                else:
+                    score += 0
+                    self.pathOverY_count += 1
 
         else:
             score += 0
