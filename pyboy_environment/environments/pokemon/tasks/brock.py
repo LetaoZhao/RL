@@ -138,7 +138,7 @@ class PokemonBrock(PokemonEnvironment):
                 # print("on_switch")
                 return_score += 1
             
-            # print(return_score)
+            
         else:
             print("not trained")
 
@@ -147,6 +147,9 @@ class PokemonBrock(PokemonEnvironment):
             return_score += 10000
             print("YEEEEEEEEEES")
             
+
+        print(return_score)
+
         return return_score
 
 
