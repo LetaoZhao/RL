@@ -223,18 +223,28 @@ class PokemonBrock(PokemonEnvironment):
             if ((new_location[0] >= 10) and (pre_location[0] < 10)):
                 score -= 500
             
-            if ((new_location[0] == 8) and (pre_location[0] != 8)):
-                score += 1000
-            if ((new_location[0] != 8) and (pre_location[0] == 8)):
-                score -= 1000
+            if (new_location[1] > 6):
+                if ((new_location[0] == 8) and (pre_location[0] != 8)):
+                    score += 1000
+                if ((new_location[0] != 8) and (pre_location[0] == 8)):
+                    score -= 1000
+            else:
+                if ((new_location[0] == 9) and (pre_location[0] != 9)):
+                    score += 1000
+                if ((new_location[0] != 9) and (pre_location[0] == 9)):
+                    score -= 1000
 
-            if ((new_location[1] <= 8) and (pre_location[1] > 8)):
+            if ((new_location[1] <= 9) and (pre_location[1] > 9)):
                 score += 1000
-            if ((new_location[1] > 8) and (pre_location[1] <= 8)):
+            if ((new_location[1] > 9) and (pre_location[1] <= 9)):
                 score -= 1000
-            if ((new_location[1] <= 4) and (pre_location[1] > 4)):
+            if ((new_location[1] <= 6) and (pre_location[1] > 6)):
                 score += 1000
-            if ((new_location[1] > 4) and (pre_location[1] <= 4)):
+            if ((new_location[1] > 6) and (pre_location[1] <= 6)):
+                score -= 1000
+            if ((new_location[1] <= 3) and (pre_location[1] > 3)):
+                score += 1000
+            if ((new_location[1] > 3) and (pre_location[1] <= 3)):
                 score -= 1000
 
         return score
@@ -252,6 +262,11 @@ class PokemonBrock(PokemonEnvironment):
                 score -= gain
         elif (map_id == 0):
             if ((self.step_action == 1) or (self.step_action == 3)):
+                score += gain
+            else:
+                score -= gain
+        elif (map_id == 1):
+            if ((self.step_action == 1) or (self.step_action == 2) or (self.step_action == 3)):
                 score += gain
             else:
                 score -= gain
@@ -274,7 +289,9 @@ class PokemonBrock(PokemonEnvironment):
             if (new_map_id == 40):
                 target = [5,12]
             elif (new_map_id == 0): 
-                target = [7,0]
+                target = [9,0]
+            elif (new_map_id == 12): 
+                target = [9,0]
             else:
                 target = [0,0]
 
@@ -551,7 +568,7 @@ class PokemonBrock(PokemonEnvironment):
         if (game_stats["badges"] > self.prior_game_stats["badges"]):
             ifDone = 1
         
-        if (game_stats["location"]["map_id"] == 12):
+        if (game_stats["location"]["map_id"] == 1):
             ifDone = 1
 
         if (ifDone):
