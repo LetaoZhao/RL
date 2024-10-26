@@ -79,8 +79,8 @@ class PokemonBrock(PokemonEnvironment):
         self.stepCount += 1
         
         used_states = [
-            # full_state["location"]["x"],
-            # full_state["location"]["y"],
+            full_state["location"]["x"],
+            full_state["location"]["y"],
             # full_state["location"]["map_id"],
             self.prior_game_stats["location"]["x"],
             self.prior_game_stats["location"]["y"],
@@ -138,7 +138,7 @@ class PokemonBrock(PokemonEnvironment):
                 # return_score += self.notOK_action_penalty(100)
                 # return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
 
-                return_score += self.pure_action_reward(100)
+                return_score += self.pure_action_reward(new_state,100)
                 
             else:
                 # print("on_switch")
@@ -160,9 +160,10 @@ class PokemonBrock(PokemonEnvironment):
     
 
 
-    def pure_action_reward(self,gain):
+    def pure_action_reward(self,new_state,gain):
         score = 0.0
 
+        new_location = [new_state["location"]["x"],new_state["location"]["y"]]
         pre_location = [self.prior_game_stats["location"]["x"],self.prior_game_stats["location"]["y"]]
         map_id = self.prior_game_stats["location"]["map_id"]
         action = self.step_action
@@ -189,6 +190,9 @@ class PokemonBrock(PokemonEnvironment):
 
             if (action == 4):
                 score += gain
+
+            if (new_location == pre_location):
+                score = 0
         
         return score
 
