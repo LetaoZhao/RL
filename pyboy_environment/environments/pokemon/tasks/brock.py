@@ -221,6 +221,12 @@ class PokemonBrock(PokemonEnvironment):
         gain_pixel = num_pixel*percent
         diff_pixel = 0
 
+        pre_height = len(map_2)
+        pre_width = len(map_2[0])
+
+        if (height != pre_height) or (width != pre_width):
+            print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1")
+
         # print("two map")
         # print([num_pixel,gain_pixel])
 
