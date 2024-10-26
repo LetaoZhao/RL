@@ -47,6 +47,7 @@ class PokemonBrock(PokemonEnvironment):
         self.step_action = 0
 
         self.stepCount = 0
+        self.LR_count = 0
 
         super().__init__(
             act_freq=act_freq,
@@ -110,13 +111,14 @@ class PokemonBrock(PokemonEnvironment):
             # print("start_switch")
 
         if(self.mapSwitch_count1 == 0):
+            return_score += self.up_base_reward(new_state)
             # print("normal")
             # return_score += self.distance_reward(new_state,100)
             # return_score += self.step_penalty(10)
-            # return_score += self.collision_penalty(new_state)
-            return_score += self.inMap_step_reward(new_state)
-            return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
-            return_score += self.notOK_action_penalty(1)
+            return_score += self.collision_penalty(new_state)
+            # return_score += self.inMap_step_reward(new_state)
+            # return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
+            # return_score += self.notOK_action_penalty(1)
         else:
             # print("on_switch")
             return_score += 1
@@ -129,30 +131,38 @@ class PokemonBrock(PokemonEnvironment):
             print("YEEEEEEEEEES")
             
         return return_score
-    
 
 
 
+    def up_base_reward(self,new_state):
+        score = 0.0
 
-    # def get_table_reward(self,new_state):
-    #     score = 0.0
+        new_location = [new_state["location"]["x"],new_state["location"]["y"]]
+        pre_location = [self.prior_game_stats["location"]["x"],self.prior_game_stats["location"]["y"]]
+        new_map_id = new_state["location"]["map_id"]
 
-    #     map_id = self.prior_game_stats["location"]["map_id"]
-    #     new_location = [new_state["location"]["x"],new_state["location"]["y"]]
-    #     pre_location = [self.prior_game_stats["location"]["x"],self.prior_game_stats["location"]["y"]]
-    #     action = self.step_action
+        if (new_map_id != 40):
+            if (new_location[1] < pre_location[1]):
+                self.LR_count = 0
+                score += 100
+            elif (new_location[1] > pre_location[1]):
+                score -= 100
+            else:
+                score -= 5
 
-    #     if (map_id == 40):
-    #         if (action == 0):
-    #             if(new_location[1] > pre_location[1]):
-    #                 score += 10
-    #             else:
-    #                 score -= 10
-    #         else:
-    #             score -= 10
-
-    #     elif (map_id == 0):
-    #         if()
+            if (new_location[0] != pre_location[0]):
+                self.LR_count += 1
+                
+                if (self.LR_count < 5):
+                    score += 25
+                else:
+                    score -= 25
+            else:
+                score += 0
+        else:
+            score = 0
+        
+        return score
     
 
 
