@@ -188,6 +188,7 @@ class PokemonBrock(PokemonEnvironment):
 
         if (isNew):
             print("new map!")
+            print(len(self.map_queue))
             score += gain
 
         return score
@@ -196,8 +197,8 @@ class PokemonBrock(PokemonEnvironment):
         curret_map_num = len(self.map_queue)
         isNew = 1
         isSame = 0
-        print("start search ==============")
-        print(curret_map_num)
+        # print("start search ==============")
+        # print(curret_map_num)
 
         for i in range(0,curret_map_num):
             isSame = self.compare_maps(map,self.map_queue[i],0.5)
@@ -205,10 +206,10 @@ class PokemonBrock(PokemonEnvironment):
                 isNew = 0
 
         if (isNew):
-            print("find a new!")
+            # print("find a new!")
             self.map_queue.append(map)
 
-        print("end search ===============")
+        # print("end search ===============")
 
         return isNew
 
@@ -220,8 +221,8 @@ class PokemonBrock(PokemonEnvironment):
         gain_pixel = num_pixel*percent
         diff_pixel = 0
 
-        print("two map")
-        print([num_pixel,gain_pixel])
+        # print("two map")
+        # print([num_pixel,gain_pixel])
 
         isSame = 0
 
@@ -230,10 +231,10 @@ class PokemonBrock(PokemonEnvironment):
                 if (map_1[i1][i2] != map_2[i1][i2]):
                     diff_pixel += 1
 
-        print([diff_pixel])
+        # print([diff_pixel])
 
         if (diff_pixel < gain_pixel):
-            isSame == 1
+            isSame = 1
 
         return isSame
 
