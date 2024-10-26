@@ -88,7 +88,7 @@ class PokemonBrock(PokemonEnvironment):
         return_score = 0.0
 
         if(self.mapSwitch_count1 != 0):
-            if(self.mapSwitch_count1 < 2):
+            if(self.mapSwitch_count1 < 4):
                 self.mapSwitch_count1 += 1
             else:
                 self.mapSwitch_count1 = 0
