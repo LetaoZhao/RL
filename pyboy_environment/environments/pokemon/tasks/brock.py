@@ -81,7 +81,7 @@ class PokemonBrock(PokemonEnvironment):
 
         self.stepCount += 1
         
-        used_states = [
+        used_states = self.get_1D_maps(full_state["map"],self.prior_game_stats["map"])
             # full_state["location"]["x"],
             # full_state["location"]["y"],
             # # full_state["location"]["map_id"],
@@ -90,8 +90,8 @@ class PokemonBrock(PokemonEnvironment):
             # self.prior_game_stats["location"]["map_id"],
             # self.step_action
             # self.stepCount
-            self.get_1D_maps(full_state["map"],self.prior_game_stats["map"])
-        ]
+            
+        
 
         return used_states
     
@@ -100,13 +100,14 @@ class PokemonBrock(PokemonEnvironment):
 
         height = len(map_1)
         width = len(map_1[0])
-        start_height = height//2 - 3
-        start_width = width//2 - 3
+        # start_height = height//2 - 3
+        # start_width = width//2 - 3
 
-        for i1 in range(0,6):
-            for i2 in range(0,6):
-                result.append(map_1[i1+start_height][i2+start_width])
-                result.append(map_2[i1+start_height][i2+start_width])
+        for i1 in range(0,height):
+            for i2 in range(0,width):
+                result.append(map_1[i1][i2])
+                result.append(map_2[i1][i2])
+
         
         return result
 
