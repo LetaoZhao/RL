@@ -86,6 +86,8 @@ class PokemonEnvironment(PyboyEnvironment):
         elif (state["location"]["map_id"] == 0):
             if (state["location"]["x"] > 8):
                 button = 1
+            else:
+                self.notUse = 0
         else:
             self.notUse = 0
             button = button
