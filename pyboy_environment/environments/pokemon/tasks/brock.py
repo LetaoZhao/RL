@@ -106,12 +106,12 @@ class PokemonBrock(PokemonEnvironment):
 
         if(self.mapSwitch_count1 == 0):
             # print("normal")
-            return_score += self.distance_reward(new_state)
+            return_score += self.distance_reward(new_state,100)
             # return_score += self.step_penalty(10)
             # return_score += self.collision_penalty(new_state)
             return_score += self.inMap_step_reward(new_state)
             # return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
-            return_score += self.notOK_action_penalty(10)
+            return_score += self.notOK_action_penalty(1)
         else:
             # print("on_switch")
             return_score += 1
@@ -214,7 +214,7 @@ class PokemonBrock(PokemonEnvironment):
 
         return score
 
-    def distance_reward(self,new_state):
+    def distance_reward(self,new_state,gain):
         score = 0.0
 
         new_location = [new_state["location"]["x"],new_state["location"]["y"]]
@@ -241,9 +241,9 @@ class PokemonBrock(PokemonEnvironment):
                 self.pathOverX_count = 0
 
                 if (abs(pre_diff[0])>abs(new_diff[0])):
-                    score += 100*(abs(pre_diff[0])-abs(new_diff[0]))
+                    score += gain*(abs(pre_diff[0])-abs(new_diff[0]))
                 elif (abs(pre_diff[0])<abs(new_diff[0])):
-                    score -= 100*(abs(new_diff[0])-abs(pre_diff[0]))
+                    score -= gain*(abs(new_diff[0])-abs(pre_diff[0]))
                 else:
                     score += 0
             else:
@@ -260,9 +260,9 @@ class PokemonBrock(PokemonEnvironment):
                 self.pathOverY_count = 0
 
                 if (abs(pre_diff[1])>abs(new_diff[1])):
-                    score += 100
+                    score += gain*(abs(pre_diff[1])-abs(new_diff[1]))
                 elif (abs(pre_diff[1])<abs(new_diff[1])):
-                    score -= 100
+                    score -= gain*(abs(new_diff[1])-abs(pre_diff[1]))
                 else:
                     score += 0
             else:
