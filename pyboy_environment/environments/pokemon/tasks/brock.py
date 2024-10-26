@@ -140,7 +140,7 @@ class PokemonBrock(PokemonEnvironment):
                 
             else:
                 # print("on_switch")
-                return_score += 1
+                return_score += 1000
             
             
         else:
