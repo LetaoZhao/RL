@@ -80,7 +80,7 @@ class PokemonBrock(PokemonEnvironment):
             full_state["location"]["y"],
             full_state["location"]["map_id"],
             self.step_action,
-            self.stepCount
+            # self.stepCount
         ]
 
         return used_states
