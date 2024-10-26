@@ -121,6 +121,7 @@ class PokemonBrock(PokemonEnvironment):
 
         if (new_state["location"]["map_id"] == 12):
             return_score += 10000
+            print("YEEEEEEEEEES")
             
         return return_score
     
@@ -177,8 +178,10 @@ class PokemonBrock(PokemonEnvironment):
         if (map_id == 0):
             if ((new_location[0] == 7) and (pre_location[0] != 7)):
                 score += 1000
+                print("in")
             if ((new_location[0] != 7) and (pre_location[0] == 7)):
                 score -= 1000
+                print("out")
 
         return score
     
