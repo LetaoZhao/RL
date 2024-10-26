@@ -79,13 +79,13 @@ class PokemonBrock(PokemonEnvironment):
         self.stepCount += 1
         
         used_states = [
-            full_state["location"]["x"],
-            full_state["location"]["y"],
-            full_state["location"]["map_id"],
-            # self.prior_game_stats["location"]["x"],
-            # self.prior_game_stats["location"]["y"],
-            # self.prior_game_stats["location"]["map_id"],
-            # self.step_action
+            # full_state["location"]["x"],
+            # full_state["location"]["y"],
+            # full_state["location"]["map_id"],
+            self.prior_game_stats["location"]["x"],
+            self.prior_game_stats["location"]["y"],
+            self.prior_game_stats["location"]["map_id"],
+            self.step_action
             # self.stepCount
         ]
 
@@ -128,15 +128,17 @@ class PokemonBrock(PokemonEnvironment):
                 # return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
                 # return_score += self.notOK_action_penalty(1)
 
-                return_score += self.get_location_score(new_state,10)
-                # print(return_score)
+                # return_score += self.get_location_score(new_state,10)
+                # # print(return_score)
 
-                if (return_score == 0):
-                    return_score += self.distance_reward(new_state,100)
-                    # print("in")
+                # if (return_score == 0):
+                #     return_score += self.distance_reward(new_state,100)
+                #     # print("in")
 
                 # return_score += self.notOK_action_penalty(100)
                 # return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
+
+                return_score += self.pure_action_reward(100)
                 
             else:
                 # print("on_switch")
@@ -155,6 +157,40 @@ class PokemonBrock(PokemonEnvironment):
         # print(return_score)
 
         return return_score
+    
+
+
+    def pure_action_reward(self,gain):
+        score = 0.0
+
+        pre_location = [self.prior_game_stats["location"]["x"],self.prior_game_stats["location"]["y"]]
+        map_id = self.prior_game_stats["location"]["map_id"]
+        action = self.step_action
+
+        if (map_id == 40):
+            if (action == 0):
+                score += gain
+        
+        if (map_id == 0):
+            if (pre_location[1] > 6):
+                if (pre_location[0] > 9):
+                    if (action == 1):
+                        score += gain
+                elif (pre_location[0] < 8):
+                    if (action == 2):
+                        score += gain
+            elif (pre_location[1] < 6):
+                if (pre_location[0] > 10):
+                    if (action == 1):
+                        score += gain
+                elif (pre_location[0] < 9):
+                    if (action == 2):
+                        score += gain
+
+            if (action == 4):
+                score += gain
+        
+        return score
 
 
 
