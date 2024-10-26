@@ -88,7 +88,7 @@ class PokemonBrock(PokemonEnvironment):
         return_score = 0.0
 
         if(self.mapSwitch_count1 != 0):
-            if(self.mapSwitch_count1 < 4):
+            if(self.mapSwitch_count1 < 2):
                 self.mapSwitch_count1 += 1
             else:
                 self.mapSwitch_count1 = 0
@@ -126,13 +126,10 @@ class PokemonBrock(PokemonEnvironment):
         pre_location = [self.prior_game_stats["location"]["x"],self.prior_game_stats["location"]["y"]]
 
         if (map_id == 0):
-            if ((pre_location[1] == 11) or (pre_location[1] == 12)):
-                if ((pre_location[0] > 8) or (pre_location[0] < 7)):
-                    if ((new_location[0] > 6) or (new_location[0] < 9)):
-                        score += 1000
-                if ((pre_location[0] > 6) or (pre_location[0] < 9)):
-                    if ((new_location[0] > 8) or (new_location[0] < 7)):
-                        score -= 1000
+            if ((new_location[0] == 7) and (pre_location[0] != 7)):
+                score += 1000
+            if ((new_location[0] != 7) and (pre_location[0] == 7)):
+                score -= 1000
 
         return score
     
