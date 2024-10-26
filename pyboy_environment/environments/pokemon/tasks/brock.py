@@ -51,6 +51,9 @@ class PokemonBrock(PokemonEnvironment):
 
         self.notUse = 0
 
+
+        self.map_queue = []
+
         super().__init__(
             act_freq=act_freq,
             task="brock",
@@ -97,6 +100,18 @@ class PokemonBrock(PokemonEnvironment):
         # Implement your reward calculation logic here
 
         return_score = 0.0
+
+        return_score += self.new_map_reward(new_state,1000)
+        
+        return return_score
+    
+
+
+
+
+
+
+    def old_method(self,new_state):
         change_10_0_gain = 5000
 
         if(self.mapSwitch_count1 != 0):
@@ -155,10 +170,76 @@ class PokemonBrock(PokemonEnvironment):
             
 
         # print(return_score)
-
-        return return_score
     
 
+
+
+
+    def new_map_reward(self,new_state,gain):
+        score = 0
+        full_map = new_state["map"]
+
+        isNew = self.search_map(full_map)
+
+        if (isNew):
+            print("new map!")
+            score += gain
+
+        return score
+    
+    def search_map(self,map):
+        curret_map_num = len(self.map_queue)
+        isNew = 1
+        isSame = 0
+
+        for i in range(0,curret_map_num):
+            isSame = self.compare_maps(map,self.map_queue[i])
+            if (isSame == 1):
+                isNew = 0
+
+        if (isNew):
+            self.map_queue.append(map)
+
+        return isNew
+
+
+    def compare_maps(self,map_1,map_2,percent):
+        height = len(map_1)
+        width = len(map_1[0])
+        num_pixel = height*width
+        gain_pixel = num_pixel*percent
+        diff_pixel = 0
+
+        isSame = 0
+
+        for i1 in range(0,height):
+            for i2 in range(0,width):
+                if (map_1[i1][i2] != map_2[i1][i2]):
+                    diff_pixel += 1
+
+        if (diff_pixel < gain_pixel):
+            isSame == 1
+
+        return isSame
+
+
+
+
+    def get_round_map(self,new_state):
+        new_full_map = new_state["map"]
+        pre_full_map = self.prior_game_stats["map"]
+
+        round_map = [0,0,0,0]
+        character_location = [0,0]
+        isList = 0
+
+        height = len(pre_full_map)
+        width = len(pre_full_map[0])
+
+        for i1 in range(0,height):
+            for i2 in range(0,width):
+                if (pre_full_map[i1][12] == 383):
+                    isList = 1
 
     def pure_action_reward(self,new_state,gain):
         score = 0.0
