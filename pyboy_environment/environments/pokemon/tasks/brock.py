@@ -108,7 +108,7 @@ class PokemonBrock(PokemonEnvironment):
             # print("normal")
             return_score += self.get_simple_reward(new_state)
             return_score += self.inMap_step_reward(new_state)
-            return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
+            return_score += self.not_move_penalty(new_state,self.prior_game_stats,5)
             return_score += self.notOK_action_penalty()
         else:
             # print("on_switch")
@@ -208,14 +208,14 @@ class PokemonBrock(PokemonEnvironment):
                 self.pathOverX_count = 0
 
                 if (abs(pre_diff[0])>abs(new_diff[0])):
-                    score += 10
+                    score += 100
                 elif (abs(pre_diff[0])<abs(new_diff[0])):
-                    score -= 10
+                    score -= 100
                 else:
                     score += 0
             else:
                 if (self.pathOverX_count < 2):
-                    score += 5
+                    score += 50
                     self.pathOverX_count += 1
                 else:
                     score += 0
@@ -225,14 +225,14 @@ class PokemonBrock(PokemonEnvironment):
                 self.pathOverY_count = 0
 
                 if (abs(pre_diff[1])>abs(new_diff[1])):
-                    score += 10
+                    score += 100
                 elif (abs(pre_diff[1])<abs(new_diff[1])):
-                    score -= 10
+                    score -= 100
                 else:
                     score += 0
             else:
                 if (self.pathOverY_count < 2):
-                    score += 5
+                    score += 50
                     self.pathOverY_count += 1
                 else:
                     score += 0
@@ -455,7 +455,7 @@ class PokemonBrock(PokemonEnvironment):
         if ((x_move == 0) and (y_move == 0)):
             return -gain
         else:
-            return 0.0
+            return gain
 
 
 
