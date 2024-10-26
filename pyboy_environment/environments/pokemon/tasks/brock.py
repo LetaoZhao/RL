@@ -556,15 +556,19 @@ class PokemonBrock(PokemonEnvironment):
         # if (game_stats["location"]["map_id"] == 12):
         #     ifTruuncated = 1
 
-        # if ((game_stats["location"]["x"] == self.prior_game_stats["location"]["x"]) and (game_stats["location"]["y"] == self.prior_game_stats["location"]["y"])):
-        #     self.notmove += 1
+        if (game_stats["location"]["map_id"] != 40):
+            if ((game_stats["location"]["x"] == self.prior_game_stats["location"]["x"]) and (game_stats["location"]["y"] == self.prior_game_stats["location"]["y"])):
+                self.notmove += 1
 
-        #     if(self.notmove > 200):
-        #         self.notmove = 0
-        #         ifTruuncated = 1
+                if(self.notmove > 200):
+                    self.notmove = 0
+                    ifTruuncated = 1
+            else:
+                self.notmove = 0
 
         # Maybe if we run out of pokeballs...? or a max step count
         if (ifTruuncated):
+            self.notmove = 0
             self.stepCount = 0
 
         return ifTruuncated
