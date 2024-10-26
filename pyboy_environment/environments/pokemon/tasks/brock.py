@@ -111,7 +111,7 @@ class PokemonBrock(PokemonEnvironment):
             # return_score += self.collision_penalty(new_state)
             return_score += self.inMap_step_reward(new_state)
             # return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
-            return_score += self.notOK_action_penalty()
+            return_score += self.notOK_action_penalty(10)
         else:
             # print("on_switch")
             return_score += 1
@@ -196,17 +196,21 @@ class PokemonBrock(PokemonEnvironment):
         return score
     
     
-    def notOK_action_penalty(self):
+    def notOK_action_penalty(self,gain):
         score = 0.0
 
         map_id = self.prior_game_stats["location"]["map_id"]
 
         if (map_id == 40):
             if ((self.step_action == 1) or (self.step_action == 2) or (self.step_action == 3) or (self.step_action == 4) or (self.step_action == 5)):
-                score -= 1
+                score -= gain
+            else:
+                score += gain
         elif (map_id == 0):
             if ((self.step_action == 4) or (self.step_action == 5)):
-                score -= 1
+                score -= gain
+            else:
+                score += gain
 
         return score
 
@@ -276,6 +280,15 @@ class PokemonBrock(PokemonEnvironment):
 
     
         return score
+    
+    def not_move_penalty(self,new_state,pre_state,gain):
+        x_move = new_state["location"]["x"] - pre_state["location"]["x"]
+        y_move = new_state["location"]["y"] - pre_state["location"]["y"]
+
+        if ((x_move == 0) and (y_move == 0)):
+            return -gain
+        else:
+            return gain
 
 
 
@@ -482,15 +495,6 @@ class PokemonBrock(PokemonEnvironment):
         return_score = gain*diff_step
 
         return return_score
-    
-    def not_move_penalty(self,new_state,pre_state,gain):
-        x_move = new_state["location"]["x"] - pre_state["location"]["x"]
-        y_move = new_state["location"]["y"] - pre_state["location"]["y"]
-
-        if ((x_move == 0) and (y_move == 0)):
-            return -gain
-        else:
-            return 0
 
 
 
