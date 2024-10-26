@@ -80,6 +80,8 @@ class PokemonBrock(PokemonEnvironment):
             full_state["location"]["x"],
             full_state["location"]["y"],
             full_state["location"]["map_id"],
+            self.prior_game_stats["location"]["x"],
+            self.prior_game_stats["location"]["y"],
             self.step_action
             # self.stepCount
         ]
@@ -111,13 +113,13 @@ class PokemonBrock(PokemonEnvironment):
             # print("start_switch")
 
         if(self.mapSwitch_count1 == 0):
-            # return_score += self.up_base_reward(new_state)
+            return_score += self.up_base_reward(new_state)
             # print("normal")
             return_score += self.distance_reward(new_state,50)
-            # return_score += self.step_penalty(10)
-            # return_score += self.collision_penalty(new_state)
+            return_score += self.step_penalty(10)
+            return_score += self.collision_penalty(new_state)
             return_score += self.inMap_step_reward(new_state)
-            # return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
+            return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
             return_score += self.notOK_action_penalty(1)
         else:
             # print("on_switch")
@@ -222,14 +224,14 @@ class PokemonBrock(PokemonEnvironment):
                 score -= 100
             
             if ((new_location[0] == 8) and (pre_location[0] != 8)):
-                score += 100
+                score += 1000
             if ((new_location[0] != 8) and (pre_location[0] == 8)):
-                score -= 100
+                score -= 1000
 
             if ((new_location[1] <= 6) and (pre_location[1] > 6)):
-                score += 100
+                score += 1000
             if ((new_location[1] > 6) and (pre_location[1] <= 6)):
-                score -= 100
+                score -= 1000
 
         return score
     
@@ -429,9 +431,9 @@ class PokemonBrock(PokemonEnvironment):
         location = [0,0]
 
         if (map_id == 40):
-            location = [5,10]
+            location = [5,12]
         elif (map_id == 0):
-            location = [9,0]
+            location = [8,0]
         else:
             location = [0,0]
 
