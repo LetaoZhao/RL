@@ -63,7 +63,7 @@ class PokemonBrock(PokemonEnvironment):
         game_stats = self._generate_game_stats()
 
         return_state = self.get_used_state(game_stats)
-        # print(return_state)
+        print(return_state)
 
         # time.sleep(0.1)
 
@@ -88,7 +88,6 @@ class PokemonBrock(PokemonEnvironment):
         return_score = 0.0
 
         if(self.mapSwitch_count1 != 0):
-            print(self.get_used_state(new_state))
             if(self.mapSwitch_count1 < 5):
                 self.mapSwitch_count1 += 1
             else:
