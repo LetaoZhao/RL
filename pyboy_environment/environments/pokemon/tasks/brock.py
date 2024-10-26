@@ -131,7 +131,7 @@ class PokemonBrock(PokemonEnvironment):
         return_score += self.let_action(new_state,1)
         return_score += self.new_map(new_state)
         
-        return return_score
+        return 0
 # ============================================================================== # ==============================================================================
 
 
