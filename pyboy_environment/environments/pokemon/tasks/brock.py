@@ -100,7 +100,7 @@ class PokemonBrock(PokemonEnvironment):
         change_10_0_gain = 5000
 
         if(self.mapSwitch_count1 != 0):
-                if(self.mapSwitch_count1 < 5):
+                if(self.mapSwitch_count1 < 0):
                     self.mapSwitch_count1 += 1
                 else:
                     self.mapSwitch_count1 = 0
