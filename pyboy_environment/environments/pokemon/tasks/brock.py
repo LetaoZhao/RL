@@ -88,7 +88,8 @@ class PokemonBrock(PokemonEnvironment):
         return_score = 0.0
 
         if(self.mapSwitch_count1 != 0):
-            if(self.mapSwitch_count1 < 2):
+            print(self.get_used_state(new_state))
+            if(self.mapSwitch_count1 < 5):
                 self.mapSwitch_count1 += 1
             else:
                 self.mapSwitch_count1 = 0
@@ -117,6 +118,34 @@ class PokemonBrock(PokemonEnvironment):
             
         return return_score
     
+
+
+
+
+    # def get_table_reward(self,new_state):
+    #     score = 0.0
+
+    #     map_id = self.prior_game_stats["location"]["map_id"]
+    #     new_location = [new_state["location"]["x"],new_state["location"]["y"]]
+    #     pre_location = [self.prior_game_stats["location"]["x"],self.prior_game_stats["location"]["y"]]
+    #     action = self.step_action
+
+    #     if (map_id == 40):
+    #         if (action == 0):
+    #             if(new_location[1] > pre_location[1]):
+    #                 score += 10
+    #             else:
+    #                 score -= 10
+    #         else:
+    #             score -= 10
+
+    #     elif (map_id == 0):
+    #         if()
+    
+
+
+
+
 
     def inMap_step_reward(self,new_state):
         score = 0.0
