@@ -116,7 +116,7 @@ class PokemonBrock(PokemonEnvironment):
             return_score += self.up_base_reward(new_state)
             # print("normal")
             return_score += self.distance_reward(new_state,50)
-            # return_score += self.step_penalty(10)
+            return_score += self.step_penalty(10)
             return_score += self.collision_penalty(new_state)
             return_score += self.inMap_step_reward(new_state)
             return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
