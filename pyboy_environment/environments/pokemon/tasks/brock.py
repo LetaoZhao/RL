@@ -85,7 +85,7 @@ class PokemonBrock(PokemonEnvironment):
             # self.prior_game_stats["location"]["x"],
             # self.prior_game_stats["location"]["y"],
             # self.prior_game_stats["location"]["map_id"],
-            self.step_action
+            # self.step_action
             # self.stepCount
         ]
 
@@ -97,7 +97,7 @@ class PokemonBrock(PokemonEnvironment):
         # Implement your reward calculation logic here
 
         return_score = 0.0
-        change_10_0_gain = 2000
+        change_10_0_gain = 5000
 
         if(self.mapSwitch_count1 != 0):
                 if(self.mapSwitch_count1 < 5):
@@ -135,7 +135,7 @@ class PokemonBrock(PokemonEnvironment):
                     return_score += self.distance_reward(new_state,100)
                     # print("in")
 
-                return_score += self.notOK_action_penalty(100)
+                # return_score += self.notOK_action_penalty(100)
                 # return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
                 
             else:
@@ -328,7 +328,7 @@ class PokemonBrock(PokemonEnvironment):
                 elif (abs(pre_diff[0])<abs(new_diff[0])):
                     score -= gain*(abs(new_diff[0])-abs(pre_diff[0]))
                 else:
-                    score += gain/2
+                    score += 0
             else:
                 # score += 0
 
@@ -347,7 +347,7 @@ class PokemonBrock(PokemonEnvironment):
                 elif (abs(pre_diff[1])<abs(new_diff[1])):
                     score -= gain*(abs(new_diff[1])-abs(pre_diff[1]))
                 else:
-                    score += gain/2
+                    score += 0
             else:
                 # score += 0
 
