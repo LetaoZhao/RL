@@ -132,6 +132,7 @@ class PokemonBrock(PokemonEnvironment):
 
                 if (return_score == 0):
                     return_score += self.distance_reward(new_state,100)
+                    print("in")
 
                 return_score += self.notOK_action_penalty(10)
                 
@@ -149,7 +150,7 @@ class PokemonBrock(PokemonEnvironment):
             print("YEEEEEEEEEES")
             
 
-        print(return_score)
+        # print(return_score)
 
         return return_score
 
