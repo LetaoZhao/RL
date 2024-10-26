@@ -208,9 +208,25 @@ class PokemonBrock(PokemonEnvironment):
 
 
         if (map_id == 0):
-            if ((new_location[0] == 9) and (pre_location[0] != 9)):
+            if ((new_location == [11,12]) and (pre_location == [12,12])):
                 score += 1000
-            if ((new_location[0] != 9) and (pre_location[0] == 9)):
+            if ((new_location == [12,12]) and (pre_location == [11,12])):
+                score -= 1000
+            
+            if ((new_location == [10,12]) and (pre_location == [11,12])):
+                score += 1000
+            if ((new_location == [11,12]) and (pre_location == [10,12])):
+                score -= 1000
+            
+            if ((new_location == [9,12]) and (pre_location == [10,12])):
+                score += 1000
+            if ((new_location == [10,12]) and (pre_location == [9,12])):
+                score -= 1000
+
+            
+            if ((new_location[0] == 8) and (pre_location[0] != 8)):
+                score += 1000
+            if ((new_location[0] != 8) and (pre_location[0] == 8)):
                 score -= 1000
 
             if ((new_location[1] <= 6) and (pre_location[1] > 6)):
