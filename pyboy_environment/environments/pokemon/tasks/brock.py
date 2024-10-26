@@ -82,8 +82,9 @@ class PokemonBrock(PokemonEnvironment):
             full_state["location"]["x"],
             full_state["location"]["y"],
             full_state["location"]["map_id"],
-            # self.prior_game_stats["location"]["x"],
-            # self.prior_game_stats["location"]["y"],
+            self.prior_game_stats["location"]["x"],
+            self.prior_game_stats["location"]["y"],
+            self.prior_game_stats["location"]["map_id"],
             self.step_action
             # self.stepCount
         ]
@@ -127,7 +128,7 @@ class PokemonBrock(PokemonEnvironment):
                 # return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
                 # return_score += self.notOK_action_penalty(1)
 
-                return_score += self.get_location_score(new_state)
+                return_score += self.get_location_score(new_state,10)
 
                 if (return_score == 0):
                     return_score += self.distance_reward(new_state,100)
@@ -376,7 +377,7 @@ class PokemonBrock(PokemonEnvironment):
 
     
 
-    def get_location_score(self,state):
+    def get_location_score(self,state,gain):
         score = 0.0
         location = [state["location"]["x"],state["location"]["y"]]
         pre_location = [self.prior_game_stats["location"]["x"],self.prior_game_stats["location"]["y"]]
@@ -515,7 +516,7 @@ class PokemonBrock(PokemonEnvironment):
                 if ((location != [10,0]) and (pre_location == [10,0])):
                     score -= 2800
         
-        return score
+        return gain*score
         
 
 
