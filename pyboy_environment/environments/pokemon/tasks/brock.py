@@ -219,18 +219,26 @@ class PokemonBrock(PokemonEnvironment):
             if ((new_location[0] >= 11) and (pre_location[0] < 11)):
                 score -= 100
             if ((new_location[0] < 10) and (pre_location[0] >= 10)):
-                score += 100
+                score += 200
             if ((new_location[0] >= 10) and (pre_location[0] < 10)):
-                score -= 100
+                score -= 200
+            if ((new_location[0] < 9) and (pre_location[0] >= 9)):
+                score += 400
+            if ((new_location[0] >= 9) and (pre_location[0] < 9)):
+                score -= 400
             
             if ((new_location[0] == 7) and (pre_location[0] != 7)):
                 score += 1000
             if ((new_location[0] != 7) and (pre_location[0] == 7)):
                 score -= 1000
 
-            if ((new_location[1] <= 6) and (pre_location[1] > 6)):
+            if ((new_location[1] <= 8) and (pre_location[1] > 8)):
                 score += 1000
-            if ((new_location[1] > 6) and (pre_location[1] <= 6)):
+            if ((new_location[1] > 8) and (pre_location[1] <= 8)):
+                score -= 1000
+            if ((new_location[1] <= 4) and (pre_location[1] > 4)):
+                score += 1000
+            if ((new_location[1] > 4) and (pre_location[1] <= 4)):
                 score -= 1000
 
         return score
