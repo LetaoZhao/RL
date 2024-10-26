@@ -106,6 +106,7 @@ class PokemonBrock(PokemonEnvironment):
                     self.notUse = 1
                     # print("end_switch")
 
+        self.notUse = 0
         if (self.notUse == 0):
             if((new_state["location"]["map_id"] == 0) and (self.prior_game_stats["location"]["map_id"] == 40)):
                 return_score += change_10_0_gain
