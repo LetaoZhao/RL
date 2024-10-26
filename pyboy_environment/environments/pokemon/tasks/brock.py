@@ -39,6 +39,7 @@ class PokemonBrock(PokemonEnvironment):
             # WindowEvent.RELEASE_BUTTON_START,
         ]
 
+        self.pathOver_count = 0
         self.mapSwitch_count = 0
         self.mapSwitch_count1 = 0
         self.notmove = 0
@@ -147,6 +148,12 @@ class PokemonBrock(PokemonEnvironment):
 
         # return_score += self.get_gride_potential_score(new_state,self.prior_game_stats)
         # print([return_score,self.step_action])
+
+        if ((new_state["location"]["map_id"] != 0) and (new_state["location"]["map_id"] != 40)):
+            print("YEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
+            print(new_state["location"]["map_id"])
+
+            return_score += 100000
             
 
         return return_score
@@ -189,6 +196,8 @@ class PokemonBrock(PokemonEnvironment):
             pre_diff = [(target[0]-pre_location[0]),(target[1]-pre_location[1])]
 
             if (np.sign(new_diff[0]) == np.sign(pre_diff[0])):
+                self.pathOver_count = 0
+
                 if (abs(pre_diff[0])>abs(new_diff[0])):
                     score += 10
                 elif (abs(pre_diff[0])<abs(new_diff[0])):
@@ -196,7 +205,13 @@ class PokemonBrock(PokemonEnvironment):
                 else:
                     score += 0
             else:
-                score += 5
+                score += 0
+                # if (self.pathOver_count < 3):
+                #     score += 5
+                #     self.pathOver_count += 1
+                # else:
+                #     score += 0
+                #     self.pathOver_count += 1
 
             if (np.sign(new_diff[1]) == np.sign(pre_diff[1])):
                 if (abs(pre_diff[1])>abs(new_diff[1])):
@@ -206,7 +221,8 @@ class PokemonBrock(PokemonEnvironment):
                 else:
                     score += 0
             else:
-                score += 5
+                score += 0
+
         else:
             score += 0
 
@@ -438,6 +454,9 @@ class PokemonBrock(PokemonEnvironment):
         ifTruuncated = 0
 
         if (self.steps >= 1000):
+            ifTruuncated = 1
+
+        if ((game_stats["location"]["map_id"] != 0) and (game_stats["location"]["map_id"] != 40)):
             ifTruuncated = 1
 
         # if ((game_stats["location"]["x"] == self.prior_game_stats["location"]["x"]) and (game_stats["location"]["y"] == self.prior_game_stats["location"]["y"])):
