@@ -90,11 +90,21 @@ class PokemonBrock(PokemonEnvironment):
             # self.prior_game_stats["location"]["map_id"],
             # self.step_action
             # self.stepCount
-            full_state["map"],
-            self.prior_game_stats["map"]
+            self.get_1D_maps(full_state["map"],self.prior_game_stats["map"])
         ]
 
         return used_states
+    
+    def get_1D_maps(self,map_1,map_2):
+        result = []
+
+        for i1 in range(0,len(map_1)):
+            for i2 in range(0,len(map_1[0])):
+                result.append(map_1[i1][i2])
+                result.append(map_2[i1][i2])
+        
+        return result
+
 
 
 
