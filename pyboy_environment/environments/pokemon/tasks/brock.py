@@ -82,14 +82,16 @@ class PokemonBrock(PokemonEnvironment):
         self.stepCount += 1
         
         used_states = [
-            full_state["location"]["x"],
-            full_state["location"]["y"],
-            # full_state["location"]["map_id"],
-            self.prior_game_stats["location"]["x"],
-            self.prior_game_stats["location"]["y"],
-            self.prior_game_stats["location"]["map_id"],
-            self.step_action
+            # full_state["location"]["x"],
+            # full_state["location"]["y"],
+            # # full_state["location"]["map_id"],
+            # self.prior_game_stats["location"]["x"],
+            # self.prior_game_stats["location"]["y"],
+            # self.prior_game_stats["location"]["map_id"],
+            # self.step_action
             # self.stepCount
+            full_state["map"],
+            self.prior_game_stats["map"]
         ]
 
         return used_states
