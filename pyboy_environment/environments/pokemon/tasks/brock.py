@@ -86,6 +86,7 @@ class PokemonBrock(PokemonEnvironment):
         # Implement your reward calculation logic here
 
         return_score = 0.0
+        change_10_0_gain = 2000
 
         if(self.mapSwitch_count1 != 0):
             if(self.mapSwitch_count1 < 5):
@@ -94,13 +95,12 @@ class PokemonBrock(PokemonEnvironment):
                 self.mapSwitch_count1 = 0
                 # print("end_switch")
 
-
         if((new_state["location"]["map_id"] == 0) and (self.prior_game_stats["location"]["map_id"] == 40)):
-            return_score += 1000
+            return_score += change_10_0_gain
             self.mapSwitch_count1 = 1
             # print("start_switch")
         if((new_state["location"]["map_id"] == 40) and (self.prior_game_stats["location"]["map_id"] == 0)):
-            return_score -= 1000
+            return_score -= change_10_0_gain
             self.mapSwitch_count1 = 1
             # print("start_switch")
 
@@ -149,7 +149,6 @@ class PokemonBrock(PokemonEnvironment):
     #     elif (map_id == 0):
     #         if()
     
-
 
 
 
