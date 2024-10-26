@@ -80,11 +80,10 @@ class PokemonEnvironment(PyboyEnvironment):
 
         state = self._generate_game_stats()
 
-        self.notUse = 1
         if (state["location"]["map_id"] == 40):
             button = 0
         elif (state["location"]["map_id"] == 0):
-            if (state["location"]["x"] > 8):
+            if (state["location"]["x"] > 9):
                 button = 1
             else:
                 self.notUse = 0

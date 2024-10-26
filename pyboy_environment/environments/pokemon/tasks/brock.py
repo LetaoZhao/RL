@@ -49,7 +49,7 @@ class PokemonBrock(PokemonEnvironment):
         self.stepCount = 0
         self.LR_count = 0
 
-        self.notUse = 0
+        self.notUse = 1
 
         super().__init__(
             act_freq=act_freq,
@@ -98,14 +98,15 @@ class PokemonBrock(PokemonEnvironment):
         return_score = 0.0
         change_10_0_gain = 2000
 
-        if (self.notUse == 0):
-            if(self.mapSwitch_count1 != 0):
+        if(self.mapSwitch_count1 != 0):
                 if(self.mapSwitch_count1 < 5):
                     self.mapSwitch_count1 += 1
                 else:
                     self.mapSwitch_count1 = 0
+                    self.notUse = 1
                     # print("end_switch")
 
+        if (self.notUse == 0):
             if((new_state["location"]["map_id"] == 0) and (self.prior_game_stats["location"]["map_id"] == 40)):
                 return_score += change_10_0_gain
                 self.mapSwitch_count1 = 1
@@ -229,14 +230,14 @@ class PokemonBrock(PokemonEnvironment):
                 score -= 500
             
             if (new_location[1] > 6):
-                if ((new_location[0] == 8) and (pre_location[0] != 8)):
-                    score += 1000
-                if ((new_location[0] != 8) and (pre_location[0] == 8)):
-                    score -= 1000
-            else:
                 if ((new_location[0] == 9) and (pre_location[0] != 9)):
                     score += 1000
                 if ((new_location[0] != 9) and (pre_location[0] == 9)):
+                    score -= 1000
+            else:
+                if ((new_location[0] == 10) and (pre_location[0] != 10)):
+                    score += 1000
+                if ((new_location[0] != 10) and (pre_location[0] == 19)):
                     score -= 1000
 
             if ((new_location[1] <= 9) and (pre_location[1] > 9)):
@@ -294,9 +295,9 @@ class PokemonBrock(PokemonEnvironment):
             if (new_map_id == 40):
                 target = [5,12]
             elif (new_map_id == 0): 
-                target = [9,0]
+                target = [10,0]
             elif (new_map_id == 12): 
-                target = [9,0]
+                target = [10,0]
             else:
                 target = [0,0]
 
@@ -578,6 +579,7 @@ class PokemonBrock(PokemonEnvironment):
 
         if (ifDone):
             self.stepCount = 0
+            self.notUse = 1
         # Setting done to true if agent beats first gym (temporary)
         return ifDone
 
@@ -606,5 +608,6 @@ class PokemonBrock(PokemonEnvironment):
         if (ifTruuncated):
             self.notmove = 0
             self.stepCount = 0
+            self.notUse = 1
 
         return ifTruuncated
