@@ -115,7 +115,7 @@ class PokemonBrock(PokemonEnvironment):
         if(self.mapSwitch_count1 == 0):
             return_score += self.up_base_reward(new_state)
             # print("normal")
-            return_score += self.distance_reward(new_state,50)
+            return_score += self.distance_reward(new_state,100)
             return_score += self.step_penalty(10)
             return_score += self.collision_penalty(new_state)
             return_score += self.inMap_step_reward(new_state)
@@ -211,25 +211,21 @@ class PokemonBrock(PokemonEnvironment):
 
         if (map_id == 0):
             if ((new_location[0] < 12) and (pre_location[0] >= 12)):
-                score += 100
-            if ((new_location[0] >= 12) and (pre_location[0] < 12)):
-                score -= 100
-            if ((new_location[0] < 11) and (pre_location[0] >= 11)):
-                score += 100
-            if ((new_location[0] >= 11) and (pre_location[0] < 11)):
-                score -= 100
-            if ((new_location[0] < 10) and (pre_location[0] >= 10)):
-                score += 200
-            if ((new_location[0] >= 10) and (pre_location[0] < 10)):
-                score -= 200
-            if ((new_location[0] < 9) and (pre_location[0] >= 9)):
-                score += 400
-            if ((new_location[0] >= 9) and (pre_location[0] < 9)):
-                score -= 400
-            
-            if ((new_location[0] == 7) and (pre_location[0] != 7)):
                 score += 1000
-            if ((new_location[0] != 7) and (pre_location[0] == 7)):
+            if ((new_location[0] >= 12) and (pre_location[0] < 12)):
+                score -= 1000
+            if ((new_location[0] < 11) and (pre_location[0] >= 11)):
+                score += 200
+            if ((new_location[0] >= 11) and (pre_location[0] < 11)):
+                score -= 200
+            if ((new_location[0] < 10) and (pre_location[0] >= 10)):
+                score += 500
+            if ((new_location[0] >= 10) and (pre_location[0] < 10)):
+                score -= 500
+            
+            if ((new_location[0] == 8) and (pre_location[0] != 8)):
+                score += 1000
+            if ((new_location[0] != 8) and (pre_location[0] == 8)):
                 score -= 1000
 
             if ((new_location[1] <= 8) and (pre_location[1] > 8)):
