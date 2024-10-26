@@ -176,11 +176,11 @@ class PokemonBrock(PokemonEnvironment):
         pre_location = [self.prior_game_stats["location"]["x"],self.prior_game_stats["location"]["y"]]
 
         if (map_id == 0):
-            if ((new_location[0] == 8) and (pre_location[0] != 8)):
+            if ((new_location[0] == 9) and (pre_location[0] != 9)):
                 print(new_location,pre_location)
                 print("in")
                 score += 1000
-            if ((new_location[0] != 8) and (pre_location[0] == 8)):
+            if ((new_location[0] != 9) and (pre_location[0] == 9)):
                 print(new_location,pre_location)
                 print("out")
                 score -= 1000
@@ -226,7 +226,7 @@ class PokemonBrock(PokemonEnvironment):
             if (new_map_id == 40):
                 target = [5,12]
             elif (new_map_id == 0): 
-                target = [8,0]
+                target = [9,0]
             else:
                 target = [0,0]
 
@@ -237,9 +237,9 @@ class PokemonBrock(PokemonEnvironment):
                 self.pathOverX_count = 0
 
                 if (abs(pre_diff[0])>abs(new_diff[0])):
-                    score += 100
+                    score += 100*(abs(pre_diff[0])-abs(new_diff[0]))
                 elif (abs(pre_diff[0])<abs(new_diff[0])):
-                    score -= 100
+                    score -= 100*(abs(new_diff[0])-abs(pre_diff[0]))
                 else:
                     score += 0
             else:
