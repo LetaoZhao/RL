@@ -95,14 +95,15 @@ class PokemonBrock(PokemonEnvironment):
 
 
         if((new_state["location"]["map_id"] == 0) and (self.prior_game_stats["location"]["map_id"] == 40)):
-            return_score += 1000
+            return_score += 10000
             self.mapSwitch_count1 = 1
         if((new_state["location"]["map_id"] == 40) and (self.prior_game_stats["location"]["map_id"] == 0)):
-            return_score -= 1000
+            return_score -= 10000
             self.mapSwitch_count1 = 1
 
         if(self.mapSwitch_count1 == 0):
             return_score += self.get_simple_reward(new_state)
+            return_score += self.inMap_step_reward(new_state)
         else:
             return_score += 1
         
@@ -111,14 +112,30 @@ class PokemonBrock(PokemonEnvironment):
         # # print(return_score)
 
 
-        if ((new_state["location"]["map_id"] != 0) and (new_state["location"]["map_id"] != 40)):
-            print("YEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEES")
-            print(new_state["location"]["map_id"])
-
-            return_score += 100000
+        if (new_state["location"]["map_id"] == 12):
+            return_score += 10000
             
-
         return return_score
+    
+
+    def inMap_step_reward(self,new_state):
+        score = 0.0
+
+        map_id = new_state["location"]["map_id"]
+        new_location = [new_state["location"]["x"],new_state["location"]["y"]]
+        pre_location = [self.prior_game_stats["location"]["x"],self.prior_game_stats["location"]["y"]]
+
+        if (map_id == 0):
+            if ((pre_location[1] == 11) or (pre_location[1] == 12)):
+                if ((pre_location[0] > 8) or (pre_location[0] < 7)):
+                    if ((new_location[0] > 6) or (new_location[0] < 9)):
+                        score += 1000
+                if ((pre_location[0] > 6) or (pre_location[0] < 9)):
+                    if ((new_location[0] > 8) or (new_location[0] < 7)):
+                        score -= 1000
+
+        return score
+    
     
     def notOK_action_penalty(self):
         score = 0.0
@@ -424,7 +441,7 @@ class PokemonBrock(PokemonEnvironment):
         if (self.steps >= 1000):
             ifTruuncated = 1
 
-        if ((game_stats["location"]["map_id"] != 0) and (game_stats["location"]["map_id"] != 40)):
+        if (game_stats["location"]["map_id"] == 12):
             ifTruuncated = 1
 
         # if ((game_stats["location"]["x"] == self.prior_game_stats["location"]["x"]) and (game_stats["location"]["y"] == self.prior_game_stats["location"]["y"])):
