@@ -75,6 +75,7 @@ class PokemonBrock(PokemonEnvironment):
 
         # time.sleep(0.1)
 
+        return_state = np.array(return_state)
         return_state = return_state.astype(float)
 
         return return_state
