@@ -118,7 +118,7 @@ class PokemonBrock(PokemonEnvironment):
             # return_score += self.collision_penalty(new_state)
             # return_score += self.inMap_step_reward(new_state)
             # return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
-            return_score += self.notOK_action_penalty(1)
+            # return_score += self.notOK_action_penalty(1)
         else:
             # print("on_switch")
             return_score += 1
