@@ -129,13 +129,14 @@ class PokemonBrock(PokemonEnvironment):
                 # return_score += self.notOK_action_penalty(1)
 
                 return_score += self.get_location_score(new_state,10)
-                print(return_score)
+                # print(return_score)
 
                 if (return_score == 0):
                     return_score += self.distance_reward(new_state,100)
-                    print("in")
+                    # print("in")
 
                 return_score += self.notOK_action_penalty(10)
+                return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
                 
             else:
                 # print("on_switch")
