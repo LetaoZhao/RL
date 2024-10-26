@@ -102,6 +102,7 @@ class PokemonEnvironment(PyboyEnvironment):
             "seen_pokemon": self._read_seen_pokemon_count(),
             "money": self._read_money(),
             "events": self._read_events(),
+            "map": self.game_area(),
         }
 
     @abstractmethod

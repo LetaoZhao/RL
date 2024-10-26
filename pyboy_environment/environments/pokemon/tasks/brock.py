@@ -63,7 +63,7 @@ class PokemonBrock(PokemonEnvironment):
         game_stats = self._generate_game_stats()
 
         return_state = self.get_used_state(game_stats)
-        # print(return_state)
+        print(game_stats["map"])
 
         # time.sleep(0.1)
 
@@ -106,9 +106,11 @@ class PokemonBrock(PokemonEnvironment):
 
         if(self.mapSwitch_count1 == 0):
             # print("normal")
-            return_score += self.get_simple_reward(new_state)
-            return_score += self.inMap_step_reward(new_state)
-            return_score += self.not_move_penalty(new_state,self.prior_game_stats,5)
+            return_score += self.distance_reward(new_state)
+            return_score += self.step_penalty()
+            return_score += self.collision_penalty(new_state)
+            # return_score += self.inMap_step_reward(new_state)
+            # return_score += self.not_move_penalty(new_state,self.prior_game_stats,2)
             return_score += self.notOK_action_penalty()
         else:
             # print("on_switch")
@@ -150,7 +152,21 @@ class PokemonBrock(PokemonEnvironment):
 
 
 
+    def step_penalty(self):
+        return -10
+    
+    def collision_penalty(self,new_state):
+        score = 0
 
+        new_location = [new_state["location"]["x"],new_state["location"]["y"]]
+        pre_location = [self.prior_game_stats["location"]["x"],self.prior_game_stats["location"]["y"]]
+
+        if(new_location == pre_location):
+            if((self.step_action == 1) or (self.step_action == 2) or (self.step_action == 3) or (self.step_action == 0)):
+                score -= 10
+
+        return score
+                        
     def inMap_step_reward(self,new_state):
         score = 0.0
 
@@ -181,7 +197,7 @@ class PokemonBrock(PokemonEnvironment):
 
         return score
 
-    def get_simple_reward(self,new_state):
+    def distance_reward(self,new_state):
         score = 0.0
 
         new_location = [new_state["location"]["x"],new_state["location"]["y"]]
