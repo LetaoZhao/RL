@@ -210,17 +210,14 @@ class PokemonBrock(PokemonEnvironment):
 
 
         if (map_id == 0):
-            if (self.step_action == 1):
-                score += 200
-
             if ((new_location[0] < 12) and (pre_location[0] >= 12)):
-                score += 100
+                score += 500
             if ((new_location[0] >= 12) and (pre_location[0] < 12)):
-                score -= 100
+                score -= 500
             if ((new_location[0] < 11) and (pre_location[0] >= 11)):
-                score += 200
+                score += 500
             if ((new_location[0] >= 11) and (pre_location[0] < 11)):
-                score -= 200
+                score -= 500
             if ((new_location[0] < 10) and (pre_location[0] >= 10)):
                 score += 500
             if ((new_location[0] >= 10) and (pre_location[0] < 10)):
