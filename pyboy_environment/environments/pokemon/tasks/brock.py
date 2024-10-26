@@ -75,6 +75,8 @@ class PokemonBrock(PokemonEnvironment):
 
         # time.sleep(0.1)
 
+        return_state.astype(float)
+
         return return_state
     
     def get_used_state(self,full_state):
@@ -108,7 +110,6 @@ class PokemonBrock(PokemonEnvironment):
                 result.append(map_1[i1][i2])
                 result.append(map_2[i1][i2])
 
-        
         return result
 
 
@@ -217,7 +218,7 @@ class PokemonBrock(PokemonEnvironment):
         # print(curret_map_num)
 
         for i in range(0,curret_map_num):
-            isSame = self.compare_maps(map,self.map_queue[i],0.5)
+            isSame = self.compare_maps(map,self.map_queue[i],0.75)
             if (isSame == 1):
                 isNew = 0
 
