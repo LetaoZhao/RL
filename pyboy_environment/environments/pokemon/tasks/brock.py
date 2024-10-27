@@ -42,7 +42,10 @@ class PokemonBrock(PokemonEnvironment):
         self.pathOverX_count = 0
         self.pathOverY_count = 0
         self.mapSwitch_count = 0
+
         self.mapSwitch_count1 = 0
+        self.map_gain = 0
+        
         self.notmove = 0
         self.step_action = 0
 
@@ -128,12 +131,96 @@ class PokemonBrock(PokemonEnvironment):
         self.stepCount += 1
 
         # return_score += self.new_map_reward(new_state,1000)
-        return_score += self.let_action(new_state,1)
+        # return_score += self.let_action(new_state,1)
         return_score += self.new_map(new_state)
+
+        if (self.mapSwitch_count1 != 0):
+            if (self.mapSwitch_count1 > 0):
+                if (self.mapSwitch_count1 < 3):
+                    self.mapSwitch_count1 += 1
+                    return_score += self.map_gain
+                else:
+                    self.mapSwitch_count1 = 0
+            else:
+                if (self.mapSwitch_count1 > -3):
+                    self.mapSwitch_count1 -= 1
+                    return_score -= self.map_gain
+                else:
+                    self.mapSwitch_count1 = 0
+        else:
+            return_score += self.get_manual_potential_reward()
         
         return return_score
 # ============================================================================== # ==============================================================================
 
+    
+    def get_manual_potential_reward(self,new_state,gain):
+        score = 0
+
+        new_location = [new_state["location"]["x"],new_state["location"]["y"]]
+        pre_location = [self.prior_game_stats["location"]["x"],self.prior_game_stats["location"]["y"]]
+        new_id = new_state["location"]["map_id"]
+        pre_id = self.prior_game_stats["location"]["map_id"]
+
+        new_potential = self.manual_potential(new_location,new_id)
+        pre_potential = self.manual_potential(pre_location,pre_id)
+        diff_petential = new_potential - pre_potential
+
+        score = gain*diff_petential
+
+        return score
+        
+
+
+    def manual_potential(self,location,map_id):
+        map_40 = [
+            [0,0,0,0,0,1,0,0,0,0,0],
+            [0,0,0,0,1,2,1,0,0,0,0],
+            [0,0,0,1,2,3,2,1,0,0,0],
+            [0,0,1,2,3,4,3,2,1,0,0],
+            [0,1,2,3,4,5,4,3,2,1,0],
+            [1,2,3,4,5,6,5,4,3,2,1],
+            [2,3,4,5,6,7,6,5,4,3,2],
+            [3,4,5,6,7,8,7,6,5,4,3],
+            [4,5,6,7,8,9,8,7,6,5,4],
+            [5,6,7,8,9,10,9,8,7,6,5]
+        ]
+
+        map_0 = [
+            [10,11,12,13,14,15,16,17,18,19,20,19,18,17,16,15,14,13,12,11],
+            [9,10,11,12,13,14,15,16,17,18,19,18,17,16,15,14,13,12,11,10],
+            [8,9,10,11,12,13,14,15,16,17,18,17,16,15,14,13,12,11,10,9],
+            [7,8,9,10,11,12,13,14,15,16,17,16,15,14,13,12,11,10,9,8],
+            [6,7,8,9,10,11,12,13,14,15,16,15,14,13,12,11,10,9,8,7],
+            [5,6,7,8,9,10,11,12,13,14,15,14,13,12,11,10,9,8,7,6],
+            [4,5,6,7,8,9,10,11,12,13,14,13,12,11,10,9,8,7,6,5],
+            [3,4,5,6,7,8,9,10,11,10,9,8,7,6,5,5,4,4,3,3],
+            [2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,2,1,1],
+            [1,2,3,4,5,6,7,8,9,8,7,6,5,4,3,2,1,1,0,0],
+            [0,1,2,3,4,5,6,7,8,7,6,5,4,3,2,1,0,0,0,0],
+            [0,0,1,2,3,4,5,6,7,6,5,4,3,2,1,0,0,0,0,0],
+            [0,0,0,1,2,3,4,5,6,5,4,3,2,1,0,0,0,0,0,0],
+            [0,0,0,0,1,2,3,4,5,4,3,2,1,0,0,0,0,0,0,0],
+            [0,0,0,0,0,1,2,3,4,3,2,1,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,1,2,3,4,1,0,0,0,0,0,0,0,0,0],
+        ]
+
+        potential = 0
+
+        if (map_id == 40):
+            if ((location[0] < 11) and (location[1] < 10)):
+                potential = 1*map_40[location[1]][location[0]]
+            else:
+                potential = 0
+        elif (map_id == 0):
+            if ((location[0] < 20) and (location[1] < 16)):
+                potential = 10*map_0[location[1]][location[0]]
+            else:
+                potential = 0
+        else:
+            potential = 0
+        
+        return potential
 
 
     def let_action(self,new_state,gain):
@@ -157,13 +244,21 @@ class PokemonBrock(PokemonEnvironment):
 
         if ((new_map_id == 0) and (pre_map_id == 40)):
             score += 1000
+            self.mapSwitch_count1 = 1
+            self.map_gain = 100
         if ((new_map_id == 40) and (pre_map_id == 0)):
             score -= 1000
+            self.mapSwitch_count1 = -1
+            self.map_gain = 100
 
         if ((new_map_id == 1) and (pre_map_id == 0)):
             score += 10000
+            self.mapSwitch_count1 = 1
+            self.map_gain = 1000
         if ((new_map_id == 0) and (pre_map_id == 1)):
             score -= 10000
+            self.mapSwitch_count1 = -1
+            self.map_gain = 1000
 
         return score
 
