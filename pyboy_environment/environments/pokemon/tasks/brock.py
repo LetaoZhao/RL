@@ -148,7 +148,7 @@ class PokemonBrock(PokemonEnvironment):
                 else:
                     self.mapSwitch_count1 = 0
         else:
-            return_score += self.get_manual_potential_reward(new_state,10)
+            return_score += self.get_manual_potential_reward(new_state,1)
         
         return return_score
 # ============================================================================== # ==============================================================================
