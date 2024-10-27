@@ -45,7 +45,7 @@ class PokemonBrock(PokemonEnvironment):
 
         self.mapSwitch_count1 = 0
         self.map_gain = 0
-        
+
         self.notmove = 0
         self.step_action = 0
 
@@ -148,7 +148,7 @@ class PokemonBrock(PokemonEnvironment):
                 else:
                     self.mapSwitch_count1 = 0
         else:
-            return_score += self.get_manual_potential_reward()
+            return_score += self.get_manual_potential_reward(new_state,10)
         
         return return_score
 # ============================================================================== # ==============================================================================
